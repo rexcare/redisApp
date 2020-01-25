@@ -1,6 +1,6 @@
 # Redis GUI
 
-A desktop (Mac, Linux & Windows) GUI client for Redis built using Electron, React & Rust.
+A desktop GUI client (Mac, Windows & Linux) for Redis built using Electron, React & Rust.
 
 ## Acknowledgements
 
