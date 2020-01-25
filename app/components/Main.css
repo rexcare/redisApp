@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  flex: 1;
+  height: 100vh;
+}
+
+.sidebar {
+  flex: 1;
+}
+
+.content {
+  flex: 5;
+}
