@@ -49,3 +49,8 @@ main.js.map
 
 .idea
 npm-debug.log.*
+
+native/target
+native/index.node
+native/artifacts.json
+**/*~

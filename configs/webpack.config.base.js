@@ -28,6 +28,10 @@ export default {
         test: /\.css$/,
         include: MONACO_DIR,
         use: ['css-loader']
+      },
+      {
+        test: /\.node$/,
+        use: 'node-loader'
       }
     ]
   },

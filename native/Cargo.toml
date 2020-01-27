@@ -1,0 +1,18 @@
+[package]
+name = "redis-gui"
+version = "0.1.0"
+authors = ["Joel Raju"]
+license = "MIT"
+build = "build.rs"
+exclude = ["artifacts.json", "index.node"]
+
+[lib]
+name = "redis_gui"
+crate-type = ["cdylib"]
+
+[build-dependencies]
+neon-build = "0.3.3"
+
+[dependencies]
+neon = "0.3.3"
+redis = "0.15.1"
