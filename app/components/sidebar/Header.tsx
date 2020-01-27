@@ -1,11 +1,10 @@
-// @flow
 import React from 'react';
 import { Button } from '@blueprintjs/core';
 import styles from './Header.css';
 
 type Props = {
-  searchTerm: string,
-  onChangeSearch: (searchTerm: string) => null
+  searchTerm: string;
+  onChangeSearch: (searchTerm: string) => null;
 };
 
 const Header: React.FC<Props> = ({ onChangeSearch, searchTerm }) => {

@@ -4,10 +4,12 @@ import routes from './constants/routes.json';
 import App from './containers/App';
 import MainPage from './containers/MainPage';
 
-export default () => (
-  <App>
-    <Switch>
-      <Route path={routes.HOME} component={MainPage} />
-    </Switch>
-  </App>
-);
+export default function Routes() {
+  return (
+    <App>
+      <Switch>
+        <Route path={routes.HOME} component={MainPage} />
+      </Switch>
+    </App>
+  );
+}

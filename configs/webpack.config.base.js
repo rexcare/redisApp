@@ -15,7 +15,7 @@ export default {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.tsx?$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
@@ -46,7 +46,7 @@ export default {
    * Determine the array of extensions that should be used to resolve modules.
    */
   resolve: {
-    extensions: ['.js', '.jsx', '.json'],
+    extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
     modules: [path.join(__dirname, '..', 'app'), 'node_modules']
   },
 
@@ -55,10 +55,6 @@ export default {
       NODE_ENV: 'production'
     }),
 
-    new webpack.NamedModulesPlugin(),
-
-    new MonacoWebpackPlugin({
-      languages: ['redis']
-    })
+    new webpack.NamedModulesPlugin()
   ]
 };

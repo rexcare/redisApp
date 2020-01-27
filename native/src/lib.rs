@@ -1,8 +1,6 @@
 #[macro_use]
 extern crate neon;
 extern crate redis;
-extern crate futures;
-extern crate tokio;
 
 use neon::prelude::*;
 
@@ -11,13 +9,14 @@ fn hello(mut cx: FunctionContext) -> JsResult<JsString> {
 }
 
 
-fn connectToRedisServer(mut cx: FunctionContext) -> JsResult<JsString> {
-  let host = cx.argument::<JsString>(0).value()?;
-  let port = cx.argument::<JsString>(1).value()?;
-  let password = cx.argument::<JsString>(2).value()?;
-  let database = cx.argument::<JsString>(3).value()?;
+fn connectToRedisServer(mut cx: FunctionContext) -> JsResult<JsUndefined> {
+  // let host = cx.argument::<JsString>(0).value()?;
+  // let port = cx.argument::<JsString>(1).value()?;
+  // let password = cx.argument::<JsString>(2).value()?;
+  // let database = cx.argument::<JsString>(3).value()?;
 
-  let client = try!(redis::Client::open("redis://127.0.0.1/"));
+  // let client = try!(redis::Client::open("redis://127.0.0.1/"));
+  Ok(cx.undefined())
 }
 
 register_module!(mut cx, {
