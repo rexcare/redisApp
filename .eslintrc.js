@@ -12,5 +12,13 @@ module.exports = {
         config: require.resolve('./configs/webpack.config.eslint.js')
       }
     }
-  }
+  },
+  overrides: [
+    {
+      files: ['**/*.tsx'],
+      rules: {
+        'react/prop-types': 'off'
+      }
+    }
+  ]
 };

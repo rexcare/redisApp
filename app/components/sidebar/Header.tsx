@@ -5,9 +5,14 @@ import styles from './Header.css';
 type Props = {
   searchTerm: string;
   onChangeSearch: (searchTerm: string) => null;
+  showConnectionDialog: () => null;
 };
 
-const Header: React.FC<Props> = ({ onChangeSearch, searchTerm }) => {
+const Header: React.FC<Props> = ({
+  searchTerm,
+  onChangeSearch,
+  showConnectionDialog
+}) => {
   return (
     <div className={styles.container}>
       <div className="bp3-input-group .modifier">
@@ -20,7 +25,7 @@ const Header: React.FC<Props> = ({ onChangeSearch, searchTerm }) => {
           onChange={({ target: { value } }) => onChangeSearch(value)}
         />
       </div>
-      <Button icon="plus" />
+      <Button icon="plus" onClick={showConnectionDialog} />
     </div>
   );
 };

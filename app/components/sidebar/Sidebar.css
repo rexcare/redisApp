@@ -4,13 +4,15 @@
   flex-direction: column;
   flex: 1;
   height: 100vh;
-  margin: 8px;
 }
 
 .header {
+  margin-left: 8px;
+  margin-right: 8px;
 }
 
 .connectionlist {
   display: flex;
   flex: 1;
+  margin: 8px;
 }

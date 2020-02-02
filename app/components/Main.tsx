@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@blueprintjs/core';
+import SplitPane from 'react-split-pane';
 import Sidebar from './sidebar/Sidebar';
 import styles from './Main.css';
 import Editor from './editor/Editor';
@@ -11,19 +11,25 @@ const Main: React.FC = () => {
   console.log(hello());
 
   return (
-    <div className={styles.container}>
+    <SplitPane split="vertical" minSize={250} maxSize={300} defaultSize={300}>
       <div className={styles.sidebar}>
         <Sidebar />
       </div>
-      <div className={styles.content}>
-        <div className={styles.editor}>
+      <SplitPane
+        split="horizontal"
+        pane1Style={styles.editorHeader.valueOf}
+        allowResize={false}
+      >
+        <div>horizontal</div>
+        <SplitPane split="horizontal">
           <Editor />
-        </div>
-        <div className={styles.resultViewer}>
-          <ResultViewer />
-        </div>
-      </div>
-    </div>
+
+          <div className={styles.resultViewer}>
+            <ResultViewer />
+          </div>
+        </SplitPane>
+      </SplitPane>
+    </SplitPane>
   );
 };
 

@@ -21,3 +21,7 @@
 .resultViewer {
   flex: 3;
 }
+
+.editorHeader {
+  height: 80px;
+}
