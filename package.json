@@ -227,11 +227,11 @@
     "jest": "^25.1.0",
     "lint-staged": "^10.0.2",
     "mini-css-extract-plugin": "^0.9.0",
-    "monaco-editor-webpack-plugin": "^1.8.2",
     "node-loader": "^0.6.0",
     "node-sass": "^4.13.1",
     "opencollective-postinstall": "^2.0.2",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "postcss-loader": "^3.0.0",
     "prettier": "^1.19.1",
     "react-test-renderer": "^16.12.0",
     "redux-logger": "^3.0.6",
@@ -261,6 +261,7 @@
     "@blueprintjs/core": "^3.23.1",
     "@fortawesome/fontawesome-free": "^5.12.0",
     "@hot-loader/react-dom": "^16.11.0",
+    "@monaco-editor/react": "^3.1.0",
     "connected-react-router": "^6.6.1",
     "core-js": "^3.6.4",
     "devtron": "^1.4.0",
@@ -268,11 +269,10 @@
     "electron-log": "^4.0.3",
     "electron-updater": "^4.2.0",
     "history": "^4.10.1",
-    "monaco-editor": "^0.19.3",
+    "monaco-editor": "^0.20.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-hot-loader": "^4.12.19",
-    "react-monaco-editor": "^0.33.0",
     "react-redux": "^7.1.3",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
@@ -293,8 +293,6 @@
     "extends browserslist-config-erb"
   ],
   "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "hooks": {}
   }
 }

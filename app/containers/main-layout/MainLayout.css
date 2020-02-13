@@ -1,0 +1,18 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 0 1 100%;
+  min-height: min-content;
+}
+
+.codeEditor {
+  display: flex;
+  flex: 1 0 0;
+  overflow-y: auto;
+}
+
+.resultView {
+  display: flex;
+  flex: 2 0 0;
+  overflow-y: auto;
+}

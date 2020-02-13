@@ -1,9 +1,7 @@
 import React from 'react';
-import SplitPane from 'react-split-pane';
-import Sidebar from './sidebar/Sidebar';
 import styles from './Main.css';
-import Editor from './editor/Editor';
-import ResultViewer from './result-viewer/ResultViewer';
+import Sidebar from '../containers/sidebar/Sidebar';
+import MainLayout from '../containers/main-layout/MainLayout';
 
 const { hello } = require('../../native/index.node');
 
@@ -11,25 +9,16 @@ const Main: React.FC = () => {
   console.log(hello());
 
   return (
-    <SplitPane split="vertical" minSize={250} maxSize={300} defaultSize={300}>
-      <div className={styles.sidebar}>
-        <Sidebar />
+    <div>
+      <div className={styles.container}>
+        <div className={styles.sidebar}>
+          <Sidebar />
+        </div>
+        <div className={styles.mainLayout}>
+          <MainLayout />
+        </div>
       </div>
-      <SplitPane
-        split="horizontal"
-        pane1Style={styles.editorHeader.valueOf}
-        allowResize={false}
-      >
-        <div>horizontal</div>
-        <SplitPane split="horizontal">
-          <Editor />
-
-          <div className={styles.resultViewer}>
-            <ResultViewer />
-          </div>
-        </SplitPane>
-      </SplitPane>
-    </SplitPane>
+    </div>
   );
 };
 

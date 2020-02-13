@@ -4,10 +4,6 @@
   height: 100vh;
 }
 
-.sidebar {
-  flex: 1;
-}
-
 .content {
   flex: 5;
   display: flex;
@@ -24,4 +20,17 @@
 
 .editorHeader {
   height: 80px;
+}
+
+.sidebar {
+  flex: 1;
+  max-width: 400px;
+  word-wrap: break-word;
+  overflow-x: hidden;
+}
+
+.mainLayout {
+  flex: 5;
+  display: flex;
+  flex-direction: column;
 }

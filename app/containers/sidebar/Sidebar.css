@@ -1,0 +1,28 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: rgb(246, 249, 253);
+}
+
+.header {
+  margin: 8px;
+  display: flex;
+  flex-direction: row;
+}
+
+.searchbar {
+  flex: 1;
+  margin-right: 8px;
+}
+
+.footer {
+  margin: 8px;
+}
+
+.content {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  min-height: 0;
+  margin: 16px;
+}

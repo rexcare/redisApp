@@ -4,10 +4,7 @@
 
 import path from 'path';
 import webpack from 'webpack';
-import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
 import { dependencies as externals } from '../app/package.json';
-
-const MONACO_DIR = path.resolve(__dirname, './node_modules/monaco-editor');
 
 export default {
   externals: [...Object.keys(externals || {})],
@@ -23,11 +20,6 @@ export default {
             cacheDirectory: true
           }
         }
-      },
-      {
-        test: /\.css$/,
-        include: MONACO_DIR,
-        use: ['css-loader']
       },
       {
         test: /\.node$/,
@@ -55,10 +47,6 @@ export default {
       NODE_ENV: 'production'
     }),
 
-    new webpack.NamedModulesPlugin(),
-
-    new MonacoWebpackPlugin({
-      languages: ['redis']
-    })
+    new webpack.NamedModulesPlugin()
   ]
 };
