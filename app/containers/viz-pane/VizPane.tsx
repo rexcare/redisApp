@@ -2,14 +2,17 @@ import React from 'react';
 import { Button, Intent } from '@blueprintjs/core';
 import { IconNames } from '@blueprintjs/icons';
 import { CodeEditor, ResultView } from '../../components';
-import { RedisConnection } from '../../types';
 import styles from './VizPane.css';
+// eslint-disable-next-line import/no-cycle
+import { mapStateToProps } from '.';
 
-interface Props {
-  connectionList: Array<RedisConnection>;
-}
+type StoreProps = ReturnType<typeof mapStateToProps>;
 
-const VizPane: React.FC<Props> = () => {
+interface OwnProps {}
+
+type Props = StoreProps & OwnProps;
+
+const VizPane: React.FC<Props> = ({ activeConnection }) => {
   const runScript = () => {};
 
   const clearScript = () => {};
@@ -22,12 +25,14 @@ const VizPane: React.FC<Props> = () => {
             text="Run"
             icon={IconNames.REFRESH}
             intent={Intent.SUCCESS}
+            disabled={!activeConnection}
             className={styles.editorHeaderButtons}
           />
           <Button
             text="Clear"
             icon={IconNames.ERASER}
             intent={Intent.WARNING}
+            disabled={!activeConnection}
             className={styles.editorHeaderButtons}
           />
         </div>

@@ -5,16 +5,18 @@ import styles from './ConnectionList.css';
 
 interface Props {
   dataSource: Array<RedisConnection>;
-  onClick: (connection: RedisConnection) => void;
-  onEdit: (connection: RedisConnection) => void;
   activeConnection: RedisConnection | undefined;
+  onEdit: (connection: RedisConnection) => void;
+  onClick: (connection: RedisConnection) => void;
+  onRightClick: (connection: RedisConnection) => void;
 }
 
 const ConnectionList: React.FC<Props> = ({
   dataSource,
   activeConnection,
   onClick,
-  onEdit
+  onEdit,
+  onRightClick
 }) => {
   return (
     <div className={styles.listWrapper}>
@@ -28,8 +30,9 @@ const ConnectionList: React.FC<Props> = ({
               connection.host.toLowerCase() ===
                 activeConnection.host.toLowerCase()
             }
-            onClick={() => onClick(connection)}
             onEdit={() => onEdit(connection)}
+            onClick={() => onClick(connection)}
+            onRightClick={() => onRightClick(connection)}
           />
         ))}
     </div>

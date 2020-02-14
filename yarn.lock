@@ -1080,6 +1080,17 @@
     classnames "^2.2"
     tslib "~1.9.0"
 
+"@blueprintjs/table@^3.8.3":
+  version "3.8.3"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/table/-/table-3.8.3.tgz#b46308ff154b74c92b8f4e0815b9a257dcb5eb92"
+  integrity sha512-ppyXy/8USvTe+HHl6VGJk+GqJalwzutTJNAiZMgpTJh8UglH8/245IpDpIlAYlyNW98RhMtloB+5UuBWHpxmhA==
+  dependencies:
+    "@blueprintjs/core" "^3.23.1"
+    classnames "^2.2"
+    prop-types "^15.6.0"
+    react-lifecycles-compat "^3.0.4"
+    tslib "~1.9.0"
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.3.tgz#099139eaec7ebf07a27c1786a3ff64f39464d2ef"
@@ -11590,7 +11601,7 @@ prop-types-exact@^1.2.0:
     object.assign "^4.1.0"
     reflect.ownkeys "^0.2.0"
 
-prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==

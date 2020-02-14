@@ -24,8 +24,14 @@ monaco.config({
   }
 });
 
-const CodeEditor: React.FC = () => {
-  const [code, setCode] = useState('keys');
+interface OwnProps {
+  disabled: boolean;
+}
+
+type Props = OwnProps;
+
+const CodeEditor: React.FC<Props> = ({ disabled }) => {
+  const [code, setCode] = useState<string>('');
 
   const options: Editor.editor.IEditorConstructionOptions = {
     automaticLayout: true,
@@ -42,7 +48,7 @@ const CodeEditor: React.FC = () => {
       theme="dark"
       language="redis"
       value={code}
-      options={options}
+      options={{ ...options, readOnly: disabled }}
       onChange={onChangeCode}
     />
   );

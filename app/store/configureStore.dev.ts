@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import { createHashHistory } from 'history';
-import { routerMiddleware, routerActions } from 'connected-react-router';
+// import { createHashHistory } from 'history';
+// import { routerMiddleware, routerActions } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
 import createRootReducer from '../reducers';
 import * as counterActions from '../actions/counter';
@@ -21,9 +21,9 @@ declare global {
   }
 }
 
-const history = createHashHistory();
+// const history = createHashHistory();
 
-const rootReducer = createRootReducer(history);
+const rootReducer = createRootReducer();
 
 const configureStore = (initialState?: counterStateType) => {
   // Redux Configuration
@@ -45,13 +45,13 @@ const configureStore = (initialState?: counterStateType) => {
   }
 
   // Router Middleware
-  const router = routerMiddleware(history);
-  middleware.push(router);
+  // const router = routerMiddleware(history);
+  // middleware.push(router);
 
   // Redux DevTools Configuration
   const actionCreators = {
-    ...counterActions,
-    ...routerActions
+    ...counterActions
+    // ...routerActions
   };
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose
   /* eslint-disable no-underscore-dangle */
@@ -81,4 +81,4 @@ const configureStore = (initialState?: counterStateType) => {
   return store;
 };
 
-export default { configureStore, history };
+export default { configureStore };

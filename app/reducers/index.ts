@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux';
-import { connectRouter } from 'connected-react-router';
-import { History } from 'history';
 import counter from './counter';
+import connection from './connection';
+import queryResult from './queryResult';
+import { appState } from './types';
 
-export default function createRootReducer(history: History) {
-  return combineReducers({
-    router: connectRouter(history),
-    counter
+export default function createRootReducer() {
+  return combineReducers<appState>({
+    connectionState: connection,
+    queryResultState: queryResult
   });
 }
