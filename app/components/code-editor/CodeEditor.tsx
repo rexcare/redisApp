@@ -38,16 +38,13 @@ const CodeEditor: React.FC = () => {
   const onChangeCode = (_, val) => setCode(val);
 
   return (
-    <div>
-      <MonacoEditor
-        theme="dark"
-        width="500px"
-        language="redis"
-        value={code}
-        options={options}
-        onChange={onChangeCode}
-      />
-    </div>
+    <MonacoEditor
+      theme="dark"
+      language="redis"
+      value={code}
+      options={options}
+      onChange={onChangeCode}
+    />
   );
 };
 

@@ -6,14 +6,14 @@
 }
 
 .header {
-  margin: 8px;
+  margin: 16px;
   display: flex;
   flex-direction: row;
 }
 
 .searchbar {
   flex: 1;
-  margin-right: 8px;
+  margin-right: 16px;
 }
 
 .footer {
@@ -24,5 +24,4 @@
   flex: 1 1 auto;
   overflow-y: auto;
   min-height: 0;
-  margin: 16px;
 }

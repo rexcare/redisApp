@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Button } from '@blueprintjs/core';
-import { ConnectionDialog } from '../../components';
+import { IconNames } from '@blueprintjs/icons';
+import { ConnectionDialog, ConnectionList } from '../../components';
 import styles from './Sidebar.css';
+import { RedisConnection } from '../../types';
 
 interface Props {
   searchTerm: string;
@@ -16,6 +18,16 @@ const Sidebar: React.FC = () => {
   >(false);
 
   const onChangeSearch = (val: string) => setSearchTerm(val);
+
+  const items: Array<RedisConnection> = [
+    {
+      db: '127.0.0.1',
+      host: 'Local',
+      name: 'Local',
+      password: 'pwd',
+      port: '1234'
+    }
+  ];
 
   return (
     <>
@@ -32,11 +44,13 @@ const Sidebar: React.FC = () => {
             />
           </div>
           <Button
-            icon="plus"
+            icon={IconNames.PLUS}
             onClick={() => setConnectionDialogVisibility(true)}
           />
         </div>
-        <div className={styles.content}>content</div>
+        <div className={styles.content}>
+          <ConnectionList dataSource={items} activeConnection={items[0]} />
+        </div>
         <div className={styles.footer}>footer</div>
       </div>
       <ConnectionDialog

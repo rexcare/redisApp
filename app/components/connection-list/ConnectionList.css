@@ -1,0 +1,24 @@
+.listWrapper {
+  margin-bottom: 8px;
+}
+
+.listItem {
+  padding: 16px;
+  display: flex;
+  flex-direction: row;
+}
+
+.listItemActive {
+  background-color: rgb(165, 174, 182);
+}
+
+.connectionName {
+  flex: 1;
+  margin-left: 8px;
+  font-size: 0.875rem;
+}
+
+.editIcon {
+  cursor: pointer;
+  margin-right: 10px;
+}

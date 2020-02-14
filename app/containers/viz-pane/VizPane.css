@@ -8,7 +8,19 @@
 .codeEditor {
   display: flex;
   flex: 1 0 0;
-  overflow-y: auto;
+  flex-direction: column;
+}
+
+.editorHeader {
+  display: flex;
+  flex-direction: row;
+  margin: 16px;
+  justify-content: flex-end;
+}
+
+.editorHeaderButtons {
+  margin-left: 8px;
+  margin-right: 8px;
 }
 
 .resultView {
