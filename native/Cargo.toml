@@ -16,3 +16,4 @@ neon-build = "0.3.3"
 [dependencies]
 neon = "0.3.3"
 redis = "0.15.1"
+lazy_static = "0.2"
