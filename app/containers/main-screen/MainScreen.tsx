@@ -3,12 +3,12 @@ import Sidebar from '../sidebar/Sidebar';
 import VizPane from '../viz-pane';
 import styles from './MainScreen.css';
 
-const { hello } = require('../../../native/index.node');
+const { openConnection } = require('../../../native/index.node');
 
 type Props = {};
 
 const MainScreen: React.FC<Props> = props => {
-  console.log(hello());
+  openConnection('127.0.0', '', '', '');
 
   return (
     <div>
