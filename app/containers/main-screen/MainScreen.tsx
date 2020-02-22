@@ -8,7 +8,7 @@ const { openConnection } = require('../../../native/index.node');
 type Props = {};
 
 const MainScreen: React.FC<Props> = props => {
-  openConnection('127.0.0', '', '', '');
+  openConnection('127.0.0.1', '', '', '');
 
   return (
     <div>

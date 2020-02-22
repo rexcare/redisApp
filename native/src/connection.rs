@@ -13,24 +13,11 @@ pub struct ConnectionOptions {
 }
 
 
-struct Global_Connection {
-  client: Option<Client>,
+struct RedisContext {
   conn: Option<Connection>,
 }
 
-// impl Global_Connection  {
-//   fn set_connection(&mut self) {
-
-//   }
-
-//   fn get_connection() {
-
-//   }
-// }
-
-
-static mut redis_connection: Global_Connection = Global_Connection {
-  client: None,
+static mut redis_connection: RedisContext = RedisContext {
   conn: None
 };
 
@@ -63,25 +50,50 @@ pub fn init_connection(connection: ConnectionOptions) -> Result<(), RedisError> 
 
 
 
-    unsafe {
-      redis_connection.client = match Client::open(connection_url) {
-        Ok(c) => Some(c),
-        Err(err) => None,
-      };
 
-      if redis_connection.client.is_none() == false {
-        redis_connection.conn = match redis_connection.client.as_ref().unwrap().get_connection() {
+    unsafe {
+
+      // redis_connection.client = match Client::open(connection_url) {
+      //   Ok(c) => Some(c),
+      //   Err(err) => None,
+      // };
+
+      let client = Client::open(connection_url)?;
+
+      println!("executing ...");
+
+        match client.get_connection() {
           Ok(c) => {
             println!("not Errored");
-            Some(c)
+            redis_connection.conn = Some(c);
+
+
+            // match redis_connection.conn.as_mut() {
+            //   Some(cc) => {
+            //     let keys: Vec<String> = redis::cmd("KEYS").arg("*").query(cc).unwrap();
+            //     for x in keys {
+            //       println!("key - {}", x);
+            //     }
+
+            //   },
+            //   None => {
+            //     println!("Errored");
+            //   },
+
+            // };
+
+
+            // let keys: Vec<String> = redis::cmd("KEYS").arg("*").query(&mut redis_connection.conn).unwrap();
           },
           Err(err) => {
             println!("Errored");
-            None
+            // redis_connection.conn = None;
           },
-        }
-      }
+        };
+
     }
+
+    println!("continuing ....");
 
     Ok(())
 
@@ -132,11 +144,33 @@ pub fn init_connection(connection: ConnectionOptions) -> Result<(), RedisError> 
     // let mut con = client.get_connection().unwrap();
 }
 
-pub fn get_connection() {
-
+pub fn get_connection() -> Option<&'static Connection>{
+  unsafe {
+    match redis_connection.conn.as_mut() {
+      Some(connection) => Some(connection),
+      None => None
+    }
+  }
 }
 
 fn close_connection() {
 
 }
 
+
+pub fn run_query() {
+  unsafe {
+    match redis_connection.conn.as_mut() {
+      Some(cc) => {
+        let keys: Vec<String> = redis::cmd("KEYS").arg("*").query(cc).unwrap();
+        for x in keys {
+          println!("key - {}", x);
+        }
+      },
+      None => {
+        println!("Errored");
+      },
+
+    };
+  }
+}

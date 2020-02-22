@@ -10,7 +10,7 @@ use neon::prelude::*;
 
 use connection::{ConnectionOptions};
 
-use redis::{RedisResult};
+use redis::{RedisResult, Connection};
 
 fn hello(mut cx: FunctionContext) -> JsResult<JsString> {
     Ok(cx.string("hello node from electron"))
@@ -29,14 +29,26 @@ fn open_connection(mut cx: FunctionContext) -> JsResult<JsUndefined> {
       user: user
     };
 
-
     connection::init_connection(connection_options);
 
+    match connection::get_connection() {
+      Some(redis_conn) =>  {
+        redis::cmd("KEYS").arg("*").query(redis_conn).unwrap();
+        // query::get_keys(&mut redis_conn);
+      },
+      None => {
+        println!("Errored");
+      },
+    };
 
-    // let redis_client = redis::Client::open("redis://127.0.0.1/").unwrap();
-    // let mut redis_conn = redis_client.get_connection().unwrap();
+    // };
 
-    // query::get_keys(&mut redis_conn);
+    // let mut redis_conn = match connection::get_connection() {
+    //   Ok(c) => c,
+    //   Err(e) => Err(e),
+    // };
+
+
 
     Ok(cx.undefined())
 }
