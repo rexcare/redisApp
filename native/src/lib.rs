@@ -7,9 +7,7 @@ mod query;
 mod serialize;
 
 use neon::prelude::*;
-
 use connection::{ConnectionOptions};
-
 use redis::{RedisResult, Connection};
 
 fn hello(mut cx: FunctionContext) -> JsResult<JsString> {
@@ -33,32 +31,15 @@ fn open_connection(mut cx: FunctionContext) -> JsResult<JsUndefined> {
 
     match connection::get_connection() {
       Some(redis_conn) =>  {
-        redis::cmd("KEYS").arg("*").query(redis_conn).unwrap();
-        // query::get_keys(&mut redis_conn);
+        query::get_keys(redis_conn);
       },
       None => {
         println!("Errored");
       },
     };
 
-    // };
-
-    // let mut redis_conn = match connection::get_connection() {
-    //   Ok(c) => c,
-    //   Err(e) => Err(e),
-    // };
-
-
-
     Ok(cx.undefined())
 }
-
-
-
-
-
-
-
 
 
 register_module!(mut cx, {
