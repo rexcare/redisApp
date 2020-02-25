@@ -16,6 +16,9 @@ interface Props {
   connection?: RedisConnection;
 }
 
+const MAX_PORT = 65535;
+const MIN_PORT = 1024;
+
 const ConnectionDialog: React.FC<Props> = ({
   isOpen,
   onClose,
@@ -25,6 +28,17 @@ const ConnectionDialog: React.FC<Props> = ({
   const [connection, setConnection] = useState<RedisConnection>(
     connectionProp || {}
   );
+
+  const isConnectionValid = (): boolean => {
+    const port = parseInt(connection.port, 10);
+    return !!(
+      connection.name &&
+      connection.host &&
+      port &&
+      port > MIN_PORT &&
+      port <= MAX_PORT
+    );
+  };
 
   return (
     <Dialog
@@ -41,7 +55,6 @@ const ConnectionDialog: React.FC<Props> = ({
           label="Connection name"
           labelFor="name-input"
           labelInfo="(required)"
-          inline
         >
           <InputGroup
             id="name-input"
@@ -52,12 +65,7 @@ const ConnectionDialog: React.FC<Props> = ({
           />
         </FormGroup>
 
-        <FormGroup
-          label="Host"
-          labelFor="host-input"
-          labelInfo="(required)"
-          inline
-        >
+        <FormGroup label="Host" labelFor="host-input" labelInfo="(required)">
           <InputGroup
             id="host-input"
             value={connection.host}
@@ -72,7 +80,6 @@ const ConnectionDialog: React.FC<Props> = ({
           label="Port"
           labelFor="port-input"
           labelInfo="(required)"
-          inline
         >
           <InputGroup
             id="port-input"
@@ -88,7 +95,6 @@ const ConnectionDialog: React.FC<Props> = ({
           label="Password"
           labelFor="password-input"
           labelInfo="(optional)"
-          inline
         >
           <InputGroup
             id="password-input"
@@ -99,7 +105,7 @@ const ConnectionDialog: React.FC<Props> = ({
           />
         </FormGroup>
 
-        <FormGroup label="DB" labelFor="db-input" labelInfo="(optional)" inline>
+        <FormGroup label="DB" labelFor="db-input" labelInfo="(optional)">
           <InputGroup
             id="db-input"
             value={connection.db}
@@ -114,6 +120,7 @@ const ConnectionDialog: React.FC<Props> = ({
           <Button onClick={onClose}>Close</Button>
 
           <Button
+            disabled={!isConnectionValid()}
             intent={Intent.PRIMARY}
             onClick={() => addConnection(connection)}
           >

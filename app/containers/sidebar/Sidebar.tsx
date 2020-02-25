@@ -29,6 +29,15 @@ const Sidebar: React.FC = () => {
     }
   ];
 
+  const getConnectionList = () => {
+    if (!searchTerm) {
+      return items;
+    }
+    return items.filter(
+      con => con.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
+    );
+  };
+
   return (
     <>
       <div className={styles.wrapper}>
@@ -49,7 +58,10 @@ const Sidebar: React.FC = () => {
           />
         </div>
         <div className={styles.content}>
-          <ConnectionList dataSource={items} activeConnection={items[0]} />
+          <ConnectionList
+            dataSource={getConnectionList()}
+            activeConnection={items[0]}
+          />
         </div>
         <div className={styles.footer}>footer</div>
       </div>
