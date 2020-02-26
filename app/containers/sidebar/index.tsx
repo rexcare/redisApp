@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {
   getConnections,
   addConnection,
-  editConnection,
+  updateConnection,
   removeConnection
 } from '../../actions/localDB';
 import { setActiveConnection } from '../../actions/connection';
@@ -21,7 +21,7 @@ export const mapDispatchToProps = (dispatch: Dispatch) => {
     {
       getConnections,
       addConnection,
-      editConnection,
+      updateConnection,
       removeConnection,
       setActiveConnection
     },

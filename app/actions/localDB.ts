@@ -39,11 +39,9 @@ export const addConnection = (connection: RedisConnection) => (
     .write();
 
   lowDB.update('connectionCount', count => count + 1);
-
-  // getConnections()(dispatch);
 };
 
-export const editConnection = (connection: RedisConnection) => (
+export const updateConnection = (connection: RedisConnection) => (
   dispatch: Dispatch
 ) => {
   const { id, ...fieldsForUpdate } = connection;
@@ -51,10 +49,8 @@ export const editConnection = (connection: RedisConnection) => (
   lowDB
     .get('connections')
     .find({ id })
-    .assign({ fieldsForUpdate })
+    .assign({ ...fieldsForUpdate })
     .write();
-
-  // getConnections()(dispatch);
 };
 
 export const removeConnection = (id: string) => (dispatch: Dispatch) => {
@@ -64,6 +60,4 @@ export const removeConnection = (id: string) => (dispatch: Dispatch) => {
     .write();
 
   lowDB.update('connectionCount', count => count - 1);
-
-  // getConnections()(dispatch);
 };

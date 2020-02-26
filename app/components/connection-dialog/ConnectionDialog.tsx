@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Dialog,
   FormGroup,
@@ -12,7 +12,7 @@ import { RedisConnection } from '../../types';
 interface Props {
   isOpen: boolean;
   onClose: () => null;
-  addConnection: () => null;
+  addEditConnection: () => null;
   connection?: RedisConnection;
 }
 
@@ -30,12 +30,16 @@ const INITIAL_FORM_STATE = {
 const ConnectionDialog: React.FC<Props> = ({
   isOpen,
   onClose,
-  addConnection,
+  addEditConnection,
   connection: connectionProp
 }) => {
   const [connection, setConnection] = useState<RedisConnection>(
     connectionProp || INITIAL_FORM_STATE
   );
+
+  useEffect(() => {
+    setConnection({ ...INITIAL_FORM_STATE, ...connectionProp });
+  }, [connectionProp]);
 
   const isConnectionValid = (): boolean => {
     const port = parseInt(connection.port, 10);
@@ -53,7 +57,7 @@ const ConnectionDialog: React.FC<Props> = ({
   };
 
   const handleAddConnection = () => {
-    addConnection(connection);
+    addEditConnection(connection);
     resetFormState();
   };
 
@@ -70,7 +74,7 @@ const ConnectionDialog: React.FC<Props> = ({
       onClose={handleClose}
       canEscapeKeyClose
       canOutsideClickClose
-      title="Add new connection"
+      title={connectionProp?.id ? 'Edit connection' : 'Add new connection'}
     >
       <div className={Classes.DIALOG_BODY}>
         <FormGroup
@@ -146,7 +150,7 @@ const ConnectionDialog: React.FC<Props> = ({
             intent={Intent.PRIMARY}
             onClick={handleAddConnection}
           >
-            Add connection
+            {connectionProp?.id ? 'Edit connection' : 'Add connection'}
           </Button>
         </div>
       </div>

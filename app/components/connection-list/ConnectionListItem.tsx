@@ -8,29 +8,23 @@ import styles from './ConnectionList.css';
 interface Props {
   connection: RedisConnection;
   isActive: boolean;
-  onClick: () => void;
+  onConnect: () => void;
+  onDisconnect: () => void;
   onEdit: () => void;
-  onRightClick: () => void;
+  onDelete: () => void;
 }
 
 const ConnectionListItem: React.FC<Props> = ({
   connection,
   isActive,
-  onClick,
   onEdit,
-  onRightClick
+  onConnect,
+  onDisconnect,
+  onDelete
 }) => {
-  const handleMouseUp = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (event.button === 1) {
-      onRightClick();
-    }
-  };
-
   return (
     <div
       role="button"
-      onClick={onClick}
-      onMouseUp={handleMouseUp}
       className={
         isActive
           ? `${styles.listItem}  ${styles.listItemActive}`
@@ -47,6 +41,19 @@ const ConnectionListItem: React.FC<Props> = ({
           onClick={onEdit}
         />
       )}
+      <Popover
+        content={
+          <ConnectionListPopover
+            onDisconnect={onDisconnect}
+            onConnect={onConnect}
+            onEdit={onEdit}
+            onDelete={onDelete}
+            isOpen={isActive}
+          />
+        }
+      >
+        <Icon icon={IconNames.MORE} iconSize={Icon.SIZE_STANDARD} />
+      </Popover>
     </div>
   );
 };
