@@ -10,6 +10,10 @@ export type ConnectionState = {
   activeConnection: RedisConnection | undefined;
 };
 
+export type LocalDBState = {
+  initStatus: boolean;
+};
+
 export type QueryResultState = {
   resultData: any | undefined;
 };
@@ -17,6 +21,7 @@ export type QueryResultState = {
 export type AppState = {
   connectionState: ConnectionState;
   queryResultState: QueryResultState;
+  localDBState: LocalDBState;
 };
 
 export type GetState = () => counterStateType & connectionStateType;

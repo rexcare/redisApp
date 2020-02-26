@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
 import { Button } from '@blueprintjs/core';
 import { IconNames } from '@blueprintjs/icons';
+import { v4 as uuidv4 } from 'uuid';
 import { ConnectionDialog, ConnectionList } from '../../components';
+// eslint-disable-next-line import/no-cycle
+import { mapDispatchToProps, mapStateToProps } from './index';
 import styles from './Sidebar.css';
 import { RedisConnection } from '../../types';
 
-interface Props {
-  searchTerm: string;
-  onChangeSearch: (searchTerm: string) => null;
-  showConnectionDialog: () => null;
-}
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
-const Sidebar: React.FC = () => {
+const Sidebar: React.FC<Props> = ({
+  connections,
+  activeConnection,
+  getConnections,
+  addConnection
+}) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [isConnectionDialogVisible, setConnectionDialogVisibility] = useState<
     boolean
@@ -19,23 +24,23 @@ const Sidebar: React.FC = () => {
 
   const onChangeSearch = (val: string) => setSearchTerm(val);
 
-  const items: Array<RedisConnection> = [
-    {
-      db: '127.0.0.1',
-      host: 'Local',
-      name: 'Local',
-      password: 'pwd',
-      port: '1234'
-    }
-  ];
-
   const getConnectionList = () => {
-    if (!searchTerm) {
-      return items;
+    if (!connections || !Array.isArray(connections) || !connections.length) {
+      return [];
     }
-    return items.filter(
+
+    if (!searchTerm) {
+      return connections;
+    }
+
+    return connections.filter(
       con => con.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
     );
+  };
+
+  const handleAddConnection = (connection: RedisConnection) => {
+    addConnection({ ...connection, id: uuidv4() });
+    getConnections();
   };
 
   return (
@@ -60,7 +65,7 @@ const Sidebar: React.FC = () => {
         <div className={styles.content}>
           <ConnectionList
             dataSource={getConnectionList()}
-            activeConnection={items[0]}
+            activeConnection={activeConnection}
           />
         </div>
         <div className={styles.footer}>footer</div>
@@ -68,7 +73,7 @@ const Sidebar: React.FC = () => {
       <ConnectionDialog
         isOpen={isConnectionDialogVisible}
         onClose={() => setConnectionDialogVisibility(false)}
-        addConnection={connection => console.log(connection)}
+        addConnection={handleAddConnection}
       />
     </>
   );

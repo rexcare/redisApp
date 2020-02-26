@@ -2,8 +2,8 @@ import React from 'react';
 import { Icon, Popover, Position } from '@blueprintjs/core';
 import { IconNames } from '@blueprintjs/icons';
 import { RedisConnection } from '../../types';
-import styles from './ConnectionList.css';
 import ConnectionListPopover from './ConnectionListPopover';
+import styles from './ConnectionList.css';
 
 interface Props {
   connection: RedisConnection;
@@ -31,7 +31,11 @@ const ConnectionListItem: React.FC<Props> = ({
       role="button"
       onClick={onClick}
       onMouseUp={handleMouseUp}
-      className={isActive ? `${styles.listItem}  ${styles.listItemActive}` : ''}
+      className={
+        isActive
+          ? `${styles.listItem}  ${styles.listItemActive}`
+          : styles.listItem
+      }
     >
       <Icon icon={IconNames.DATABASE} iconSize={Icon.SIZE_STANDARD} />
       <div className={styles.connectionName}>{connection.name}</div>

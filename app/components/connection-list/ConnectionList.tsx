@@ -21,14 +21,13 @@ const ConnectionList: React.FC<Props> = ({
   return (
     <div className={styles.listWrapper}>
       {Array.isArray(dataSource) &&
-        dataSource.map((connection, index) => (
+        dataSource.map(connection => (
           <ConnectionListItem
-            key={index}
+            key={connection.id}
             connection={connection}
             isActive={
               activeConnection &&
-              connection.host.toLowerCase() ===
-                activeConnection.host.toLowerCase()
+              connection.id.toLowerCase() === activeConnection.id.toLowerCase()
             }
             onEdit={() => onEdit(connection)}
             onClick={() => onClick(connection)}

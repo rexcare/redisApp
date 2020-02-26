@@ -19,6 +19,14 @@ interface Props {
 const MAX_PORT = 65535;
 const MIN_PORT = 1024;
 
+const INITIAL_FORM_STATE = {
+  db: '',
+  host: '',
+  port: '6379',
+  password: '',
+  name: ''
+};
+
 const ConnectionDialog: React.FC<Props> = ({
   isOpen,
   onClose,
@@ -26,7 +34,7 @@ const ConnectionDialog: React.FC<Props> = ({
   connection: connectionProp
 }) => {
   const [connection, setConnection] = useState<RedisConnection>(
-    connectionProp || {}
+    connectionProp || INITIAL_FORM_STATE
   );
 
   const isConnectionValid = (): boolean => {
@@ -40,12 +48,26 @@ const ConnectionDialog: React.FC<Props> = ({
     );
   };
 
+  const resetFormState = () => {
+    setConnection(INITIAL_FORM_STATE);
+  };
+
+  const handleAddConnection = () => {
+    addConnection(connection);
+    resetFormState();
+  };
+
+  const handleClose = () => {
+    onClose();
+    resetFormState();
+  };
+
   return (
     <Dialog
       icon="info-sign"
       isOpen={isOpen}
       isCloseButtonShown
-      onClose={onClose}
+      onClose={handleClose}
       canEscapeKeyClose
       canOutsideClickClose
       title="Add new connection"
@@ -117,12 +139,12 @@ const ConnectionDialog: React.FC<Props> = ({
       </div>
       <div className={Classes.DIALOG_FOOTER}>
         <div className={Classes.DIALOG_FOOTER_ACTIONS}>
-          <Button onClick={onClose}>Close</Button>
+          <Button onClick={handleClose}>Close</Button>
 
           <Button
             disabled={!isConnectionValid()}
             intent={Intent.PRIMARY}
-            onClick={() => addConnection(connection)}
+            onClick={handleAddConnection}
           >
             Add connection
           </Button>

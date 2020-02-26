@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux';
-import counter from './counter';
+// import counter from './counter';
+import { AppState } from './types';
 import connection from './connection';
 import queryResult from './queryResult';
-import { appState } from './types';
+import localDB from './localDB';
 
 export default function createRootReducer() {
-  return combineReducers<appState>({
+  return combineReducers<AppState>({
     connectionState: connection,
-    queryResultState: queryResult
+    queryResultState: queryResult,
+    localDBState: localDB
   });
 }

@@ -1,10 +1,12 @@
 import { Dispatch } from 'redux';
-import low from 'lowdb';
-import FileSync from 'lowdb/adapters/FileAsync';
 import { RedisConnection } from '../types';
+import { setConnections } from './connection';
+
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
 
 const adapter = new FileSync('db.json');
-const db = low(adapter);
+const lowDB = low(adapter);
 
 export const SET_LOCALDB_INIT_STATUS = 'SET_LOCALDB_INIT_STATUS';
 
@@ -14,28 +16,31 @@ const INITIAL_DB_STATE = {
 };
 
 export const initDB = () => (dispatch: Dispatch) => {
-  db.read()
-    .then(() => {
-      console.log('loaded db');
-      return null;
-    })
-    .catch(() => {
-      console.log('creating db');
-      db.defaults(INITIAL_DB_STATE).write();
-    });
+  const result = lowDB.read().getState();
 
-  dispatch({
-    type: SET_LOCALDB_INIT_STATUS,
-    payload: true
-  });
+  if (!Object.keys(result).length) {
+    lowDB.defaults(INITIAL_DB_STATE).write();
+  }
+
+  dispatch({ type: SET_LOCALDB_INIT_STATUS, payload: true });
+};
+
+export const getConnections = () => (dispatch: Dispatch) => {
+  const connections = lowDB.get('connections').value();
+  setConnections(connections)(dispatch);
 };
 
 export const addConnection = (connection: RedisConnection) => (
   dispatch: Dispatch
 ) => {
-  db.get('connections')
+  lowDB
+    .get('connections')
     .push(connection)
     .write();
+
+  lowDB.update('connectionCount', count => count + 1);
+
+  // getConnections()(dispatch);
 };
 
 export const editConnection = (connection: RedisConnection) => (
@@ -43,14 +48,22 @@ export const editConnection = (connection: RedisConnection) => (
 ) => {
   const { id, ...fieldsForUpdate } = connection;
 
-  db.get('connections')
+  lowDB
+    .get('connections')
     .find({ id })
     .assign({ fieldsForUpdate })
     .write();
+
+  // getConnections()(dispatch);
 };
 
 export const removeConnection = (id: string) => (dispatch: Dispatch) => {
-  db.get('connections')
+  lowDB
+    .get('connections')
     .remove({ id })
     .write();
+
+  lowDB.update('connectionCount', count => count - 1);
+
+  // getConnections()(dispatch);
 };

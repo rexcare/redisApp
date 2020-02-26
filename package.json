@@ -281,7 +281,8 @@
     "react-split-pane": "^0.1.89",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "source-map-support": "^0.5.16"
+    "source-map-support": "^0.5.16",
+    "uuid": "^7.0.1"
   },
   "devEngines": {
     "node": ">=7.x",
