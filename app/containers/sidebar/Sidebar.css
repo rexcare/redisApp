@@ -2,13 +2,14 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  /* background-color: rgb(246, 249, 253); */
+  background-color: rgb(246, 249, 253);
 }
 
 .header {
-  margin: 16px;
+  padding: 16px;
   display: flex;
   flex-direction: row;
+  border-bottom: 1px solid rgba(194, 194, 194, 0.4);
 }
 
 .searchbar {
@@ -17,7 +18,9 @@
 }
 
 .footer {
-  margin: 8px;
+  padding: 16px;
+  text-align: center;
+  font-size: 1.25rem;
 }
 
 .content {

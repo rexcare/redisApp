@@ -4,6 +4,7 @@ import ResultView from './result-viewer/ResultViewer';
 import ConnectionList from './connection-list/ConnectionList';
 import ConnectionListPopover from './connection-list/ConnectionListPopover';
 import ConnectionRemoveDialog from './connection-remove-dialog/ConnectionRemoveDialog';
+import ConnectionCloseDialog from './connection-close-dialog/ConnectionCloseDialog';
 
 export {
   CodeEditor,
@@ -11,5 +12,6 @@ export {
   ResultView,
   ConnectionList,
   ConnectionListPopover,
-  ConnectionRemoveDialog
+  ConnectionRemoveDialog,
+  ConnectionCloseDialog
 };

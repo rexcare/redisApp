@@ -6,38 +6,35 @@ import { RedisConnection } from '../../types';
 interface Props {
   isOpen: boolean;
   onClose: () => null;
-  deleteConnection: () => null;
   connection: RedisConnection;
 }
 
-const ConnectionRemoveDialog: React.FC<Props> = ({
+const ConnectionCloseDialog: React.FC<Props> = ({
   isOpen,
   onClose,
-  deleteConnection,
   connection
 }) => {
   return (
     <Dialog
-      icon={IconNames.DELETE}
+      icon={IconNames.SMALL_CROSS}
       isOpen={isOpen}
       isCloseButtonShown
       onClose={onClose}
       canEscapeKeyClose
       canOutsideClickClose
-      title="Delete connection to server"
+      title="Please close the existing connection"
     >
       <div className={Classes.DIALOG_BODY}>
         <p>
-          Are you sure you want to delete connection
-          <strong>{connection ? ` ${connection.name}` : ''}</strong> ?
+          {`You are connected to the server ${
+            connection ? connection.name : ''
+          } . Please close it to open a new connection !`}
         </p>
       </div>
       <div className={Classes.DIALOG_FOOTER}>
         <div className={Classes.DIALOG_FOOTER_ACTIONS}>
-          <Button onClick={onClose}>Close</Button>
-
-          <Button intent={Intent.DANGER} onClick={deleteConnection}>
-            Delete connection
+          <Button onClick={onClose} intent={Intent.PRIMARY}>
+            Ok
           </Button>
         </div>
       </div>
@@ -45,4 +42,4 @@ const ConnectionRemoveDialog: React.FC<Props> = ({
   );
 };
 
-export default ConnectionRemoveDialog;
+export default ConnectionCloseDialog;

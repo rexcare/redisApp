@@ -5,7 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 import {
   ConnectionDialog,
   ConnectionList,
-  ConnectionRemoveDialog
+  ConnectionRemoveDialog,
+  ConnectionCloseDialog
 } from '../../components';
 // eslint-disable-next-line import/no-cycle
 import { mapDispatchToProps, mapStateToProps } from './index';
@@ -15,27 +16,28 @@ import { RedisConnection } from '../../types';
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
+enum DialogTypes {
+  CONNECTION_DIALOG,
+  CONNECTION_CLOSE_DIALOG,
+  CONNECTION_REMOVE_DIALOG
+}
+
 const Sidebar: React.FC<Props> = ({
   connections,
   activeConnection,
   getConnections,
   addConnection,
   removeConnection,
-  updateConnection
+  updateConnection,
+  openConnection
 }) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [isConnectionDialogVisible, setConnectionDialogVisibile] = useState<
-    boolean
-  >(false);
 
   const [connectionForUpdate, setConnectionForUpdate] = useState<
     RedisConnection
   >(null);
 
-  const [
-    isConnectionDeleteDialogVisible,
-    setConnectionDeleteDialogVisible
-  ] = useState<boolean>(false);
+  const [activeDialog, setActiveDialog] = useState<DialogTypes>(null);
 
   const onChangeSearch = (val: string) => setSearchTerm(val);
 
@@ -55,17 +57,16 @@ const Sidebar: React.FC<Props> = ({
 
   const confirmConnectionDelete = (connection: RedisConnection) => {
     setConnectionForUpdate(connection);
-    setConnectionDeleteDialogVisible(true);
+    setActiveDialog(DialogTypes.CONNECTION_REMOVE_DIALOG);
   };
 
   const handleEditConnection = (connection: RedisConnection) => {
     setConnectionForUpdate(connection);
-    setConnectionDialogVisibile(true);
+    setActiveDialog(DialogTypes.CONNECTION_DIALOG);
   };
 
   const onDismissDialogs = () => {
-    setConnectionDeleteDialogVisible(false);
-    setConnectionDialogVisibile(false);
+    setActiveDialog(null);
     setConnectionForUpdate(null);
   };
 
@@ -87,7 +88,13 @@ const Sidebar: React.FC<Props> = ({
     getConnections();
   };
 
-  const onConnect = (connection: RedisConnection) => {};
+  const onConnect = (connection: RedisConnection) => {
+    if (activeConnection) {
+      setActiveDialog(DialogTypes.CONNECTION_CLOSE_DIALOG);
+      return;
+    }
+    openConnection(connection);
+  };
 
   const onDisconnect = (connection: RedisConnection) => {};
 
@@ -107,7 +114,7 @@ const Sidebar: React.FC<Props> = ({
           </div>
           <Button
             icon={IconNames.PLUS}
-            onClick={() => setConnectionDialogVisibile(true)}
+            onClick={() => setActiveDialog(DialogTypes.CONNECTION_DIALOG)}
           />
         </div>
         <div className={styles.content}>
@@ -120,19 +127,24 @@ const Sidebar: React.FC<Props> = ({
             onDeleteConnection={confirmConnectionDelete}
           />
         </div>
-        <div className={styles.footer}>footer</div>
+        <div className={styles.footer}>Redis GUI</div>
       </div>
       <ConnectionDialog
-        isOpen={isConnectionDialogVisible}
+        isOpen={activeDialog === DialogTypes.CONNECTION_DIALOG}
         onClose={onDismissDialogs}
         addEditConnection={onAddEditConnection}
         connection={connectionForUpdate}
       />
       <ConnectionRemoveDialog
-        isOpen={isConnectionDeleteDialogVisible}
+        isOpen={activeDialog === DialogTypes.CONNECTION_REMOVE_DIALOG}
         onClose={onDismissDialogs}
         connection={connectionForUpdate}
         deleteConnection={onDeleteConnection}
+      />
+      <ConnectionCloseDialog
+        isOpen={activeDialog === DialogTypes.CONNECTION_CLOSE_DIALOG}
+        connection={activeConnection}
+        onClose={onDismissDialogs}
       />
     </>
   );

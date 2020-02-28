@@ -1,53 +1,54 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { Column, Table } from '@blueprintjs/table';
+import React from 'react';
+import { useTable } from 'react-table';
 import styles from './ResultViewer.css';
 
-const data = [
-  {
-    key: 'a',
-    type: 'string',
-    val: 'hello'
-  }
+import data from './data.json';
+
+const columns = [
+  { Header: 'Key', accessor: 'key' },
+  { Header: 'Value', accessor: 'value' },
+  { Header: 'Type', accessor: 'type' }
 ];
 
-const SIDEBAR_MAX_WIDTH = 400;
-
 const ResultViewer = () => {
-  const parentEl = useRef(null);
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow
+  } = useTable({
+    columns,
+    data
+  });
 
-  const [parentElWidth, setParentElWidth] = useState<number>(200);
-
-  const columnNameRenderer = (name: string) => {
-    return <div>{name}</div>;
-  };
-
-  const handleResize = () => {
-    if (parentEl && parentEl.current) {
-      const maxAvailWidthForEl = window.screen.availWidth - SIDEBAR_MAX_WIDTH;
-      const elCurrentWidth = parentEl.current.clientWidth;
-
-      const width =
-        elCurrentWidth > maxAvailWidthForEl
-          ? maxAvailWidthForEl
-          : elCurrentWidth;
-
-      setParentElWidth(width / 3);
-    }
-  };
-
-  useEffect(() => {
-    window.onresize = handleResize;
-  }, []);
-
-  return (
-    <div className={styles.wrapper} ref={parentEl}>
-      <Table numRows={10} columnWidths={Array(3).fill(parentElWidth)}>
-        <Column name="Key" nameRenderer={columnNameRenderer} />
-        <Column name="Value" />
-        <Column name="Type" />
-      </Table>
-    </div>
+  const renderResultTable = () => (
+    <table {...getTableProps()}>
+      <thead>
+        {headerGroups.map(headerGroup => (
+          <tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map(column => (
+              <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+            ))}
+          </tr>
+        ))}
+      </thead>
+      <tbody {...getTableBodyProps()}>
+        {rows.map((row, i) => {
+          prepareRow(row);
+          return (
+            <tr {...row.getRowProps()}>
+              {row.cells.map(cell => {
+                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+              })}
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
   );
+
+  return <div className={styles.wrapper}>{renderResultTable()}</div>;
 };
 
 export default ResultViewer;
