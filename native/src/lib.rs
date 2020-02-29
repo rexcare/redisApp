@@ -15,20 +15,49 @@ fn hello(mut cx: FunctionContext) -> JsResult<JsString> {
 }
 
 fn open_connection(mut cx: FunctionContext) -> JsResult<JsUndefined> {
-    let host = cx.argument::<JsString>(0)?.value();
-    let port = cx.argument::<JsString>(1)?.value();
-    let password = cx.argument::<JsString>(2)?.value();
-    let user = cx.argument::<JsString>(3)?.value();
+    let js_object_handle: Handle<JsObject> = cx.argument(0)?;
+
+    let js_object = js_object_handle
+        .downcast::<JsObject>()
+        .unwrap_or(JsObject::new(&mut cx));
+
+    let host = js_object
+        .get(&mut cx, "host")?
+        .downcast::<JsString>()
+        .unwrap_or(cx.string(""));
+
+    let port = js_object
+        .get(&mut cx, "port")?
+        .downcast::<JsString>()
+        .unwrap_or(cx.string(""));
+
+    let password = js_object
+        .get(&mut cx, "password")?
+        .downcast::<JsString>()
+        .unwrap_or(cx.string(""));
+
+    let user = js_object
+        .get(&mut cx, "user")?
+        .downcast::<JsString>()
+        .unwrap_or(cx.string(""));
+
+    let cb = cx.argument::<JsFunction>(1)?;
 
     let connection_options = ConnectionOptions {
-      host: host,
-      port: port,
-      password: password,
-      user: user
+      host: host.value(),
+      port: port.value(),
+      password: password.value(),
+      user: user.value()
     };
 
-    connection::init_connection(connection_options);
+    connection::open_connection(connection_options, cb);
 
+    Ok(cx.undefined())
+}
+
+
+
+fn get_keys() {
     match connection::get_connection() {
       Some(redis_conn) =>  {
         query::get_keys(redis_conn);
@@ -37,8 +66,6 @@ fn open_connection(mut cx: FunctionContext) -> JsResult<JsUndefined> {
         println!("Errored");
       },
     };
-
-    Ok(cx.undefined())
 }
 
 

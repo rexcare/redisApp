@@ -5,8 +5,6 @@ import VizPane from '../viz-pane';
 import { mapStateToProps, mapDispatchToProps } from './index';
 import styles from './MainScreen.css';
 
-const { openConnection } = require('../../../native/index.node');
-
 type StoreProps = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
@@ -17,8 +15,6 @@ const MainScreen: React.FC<Props> = ({
   initLocalDB,
   getConnections
 }) => {
-  // openConnection('127.0.0.1', '', '', '');
-
   useEffect(() => {
     initLocalDB();
   }, []);

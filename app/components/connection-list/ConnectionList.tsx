@@ -31,8 +31,8 @@ const ConnectionList: React.FC<Props> = ({
               activeConnection &&
               connection.id.toLowerCase() === activeConnection.id.toLowerCase()
             }
-            onConnect={onConnect}
-            onDisconnect={onDisconnect}
+            onConnect={() => onConnect(connection)}
+            onDisconnect={() => onDisconnect(connection)}
             onDelete={() => onDeleteConnection(connection)}
             onEdit={() => onEditConnection(connection)}
           />

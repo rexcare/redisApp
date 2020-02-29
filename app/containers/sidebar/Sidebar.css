@@ -20,7 +20,9 @@
 .footer {
   padding: 16px;
   text-align: center;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .content {
