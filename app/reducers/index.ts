@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-// import counter from './counter';
 import { AppState } from './types';
 import connection from './connection';
 import queryResult from './queryResult';

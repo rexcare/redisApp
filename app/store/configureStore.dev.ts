@@ -1,11 +1,10 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-// import { createHashHistory } from 'history';
-// import { routerMiddleware, routerActions } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
 import createRootReducer from '../reducers';
-import * as counterActions from '../actions/counter';
-import { counterStateType } from '../reducers/types';
+import * as connectionActions from '../actions/connection';
+import * as localDBActions from '../actions/localDB';
+import { AppState } from '../reducers/types';
 
 declare global {
   interface Window {
@@ -21,11 +20,9 @@ declare global {
   }
 }
 
-// const history = createHashHistory();
-
 const rootReducer = createRootReducer();
 
-const configureStore = (initialState?: counterStateType) => {
+const configureStore = (initialState?: AppState) => {
   // Redux Configuration
   const middleware = [];
   const enhancers = [];
@@ -44,13 +41,10 @@ const configureStore = (initialState?: counterStateType) => {
     middleware.push(logger);
   }
 
-  // Router Middleware
-  // const router = routerMiddleware(history);
-  // middleware.push(router);
-
   // Redux DevTools Configuration
   const actionCreators = {
-    ...counterActions
+    ...localDBActions,
+    ...connectionActions
     // ...routerActions
   };
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose

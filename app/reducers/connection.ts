@@ -15,7 +15,7 @@ const INITIAL_STATE: ConnectionState = {
   ]
 };
 
-export default function counter(
+export default function connection(
   state: State = INITIAL_STATE,
   action: AnyAction
 ): State {
