@@ -41,3 +41,20 @@
   flex: 2 0 0;
   overflow-y: auto;
 }
+
+.notConnectedWrapper {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+}
+
+.notConnectedText {
+  margin-top: 3rem;
+  font-size: 1.5rem;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.notConnectedIcon {
+  color: rgba(0, 0, 0, 0.5);
+}

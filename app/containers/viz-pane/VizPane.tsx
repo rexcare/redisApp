@@ -56,10 +56,23 @@ const VizPane: React.FC<Props> = ({ activeConnection }) => {
             />
           </div>
         </div>
-        <CodeEditor />
+        {activeConnection && <CodeEditor />}
       </div>
       <div className={styles.resultView}>
-        <ResultView />
+        {activeConnection ? (
+          <ResultView />
+        ) : (
+          <div className={styles.notConnectedWrapper}>
+            <Icon
+              icon={IconNames.INBOX}
+              iconSize={64}
+              className={styles.notConnectedIcon}
+            />
+            <p className={styles.notConnectedText}>
+              Not connected to the server
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
