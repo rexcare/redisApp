@@ -4,6 +4,7 @@ import { createLogger } from 'redux-logger';
 import createRootReducer from '../reducers';
 import * as connectionActions from '../actions/connection';
 import * as localDBActions from '../actions/localDB';
+import * as loadingActions from '../actions/loading';
 import { AppState } from '../reducers/types';
 
 declare global {
@@ -44,8 +45,8 @@ const configureStore = (initialState?: AppState) => {
   // Redux DevTools Configuration
   const actionCreators = {
     ...localDBActions,
-    ...connectionActions
-    // ...routerActions
+    ...connectionActions,
+    ...loadingActions
   };
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose
   /* eslint-disable no-underscore-dangle */

@@ -37,6 +37,4 @@ export const openConnection = (connection: RedisConnection) => async (
   } catch (err) {
     console.log('err === ', err);
   }
-
-  dispatch({ type: 'testing' });
 };

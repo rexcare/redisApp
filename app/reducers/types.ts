@@ -14,10 +14,16 @@ export type QueryResultState = {
   resultData: any | undefined;
 };
 
+export type LoadingState = {
+  isConnectingToServer: boolean;
+  isRunningCmd: boolean;
+};
+
 export type AppState = {
   connectionState: ConnectionState;
   queryResultState: QueryResultState;
   localDBState: LocalDBState;
+  loadingState: LoadingState;
 };
 
 export type ActionType = {
