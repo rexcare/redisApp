@@ -100,6 +100,8 @@ pub fn get_connection() -> Option<&'static mut Connection>{
     }
 }
 
-// fn close_connection() {
-
-// }
+pub fn close_connection() {
+    unsafe {
+      REDIS_CONTEXT.connection = None;
+    }
+}

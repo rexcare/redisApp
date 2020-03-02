@@ -55,6 +55,10 @@ fn open_connection(mut cx: FunctionContext) -> JsResult<JsUndefined> {
     Ok(cx.undefined())
 }
 
+fn close_connection(mut cx: FunctionContext) -> JsResult<JsUndefined> {
+    connection::close_connection();
+    Ok(cx.undefined())
+}
 
 
 fn get_keys() {
@@ -69,7 +73,10 @@ fn get_keys() {
 }
 
 
+
+
 register_module!(mut cx, {
     cx.export_function("hello", hello)?;
-    cx.export_function("openConnection", open_connection)
+    cx.export_function("openConnection", open_connection)?;
+    cx.export_function("closeConnection", close_connection)
 });

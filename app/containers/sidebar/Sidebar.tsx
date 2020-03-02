@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '@blueprintjs/core';
+import { Alert, Button, Intent } from '@blueprintjs/core';
 import { IconNames } from '@blueprintjs/icons';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -12,6 +12,12 @@ import {
 import { mapDispatchToProps, mapStateToProps } from './index';
 import styles from './Sidebar.css';
 import { RedisConnection } from '../../types';
+
+const util = require('util');
+const nativeModule = require('../../../native/index.node');
+
+const openConnection = util.promisify(nativeModule.openConnection);
+const { closeConnection } = nativeModule;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -29,7 +35,8 @@ const Sidebar: React.FC<Props> = ({
   addConnection,
   removeConnection,
   updateConnection,
-  openConnection
+  isConnectingToServer,
+  setActiveConnection
 }) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
 
@@ -38,6 +45,8 @@ const Sidebar: React.FC<Props> = ({
   >(null);
 
   const [activeDialog, setActiveDialog] = useState<DialogTypes>(null);
+  const [isErrorAlertVisible, setErrorAlertVisible] = useState<boolean>(false);
+  const [errorAlertMessage, setErrorAlertMessage] = useState<string>('');
 
   const onChangeSearch = (val: string) => setSearchTerm(val);
 
@@ -88,15 +97,34 @@ const Sidebar: React.FC<Props> = ({
     getConnections();
   };
 
-  const onConnect = (connection: RedisConnection) => {
+  const handleErrorAlertClose = () => {
+    setErrorAlertMessage('');
+    setErrorAlertVisible(false);
+  };
+
+  const onConnect = async (connection: RedisConnection) => {
     if (activeConnection) {
       setActiveDialog(DialogTypes.CONNECTION_CLOSE_DIALOG);
       return;
     }
-    openConnection(connection);
+
+    isConnectingToServer(true);
+
+    try {
+      await openConnection(connection);
+      setActiveConnection(connection);
+    } catch (err) {
+      setErrorAlertVisible(true);
+      setErrorAlertMessage(err.toString());
+    } finally {
+      isConnectingToServer(false);
+    }
   };
 
-  const onDisconnect = (connection: RedisConnection) => {};
+  const onDisconnect = (connection: RedisConnection) => {
+    closeConnection();
+    setActiveConnection(null);
+  };
 
   return (
     <>
@@ -146,6 +174,14 @@ const Sidebar: React.FC<Props> = ({
         connection={activeConnection}
         onClose={onDismissDialogs}
       />
+      <Alert
+        isOpen={isErrorAlertVisible}
+        confirmButtonText="Okay"
+        onClose={() => handleErrorAlertClose()}
+        intent={Intent.DANGER}
+      >
+        <p>{errorAlertMessage}</p>
+      </Alert>
     </>
   );
 };

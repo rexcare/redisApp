@@ -6,7 +6,8 @@ import {
   updateConnection,
   removeConnection
 } from '../../actions/localDB';
-import { setActiveConnection, openConnection } from '../../actions/connection';
+import { setActiveConnection } from '../../actions/connection';
+import { isConnectingToServer } from '../../actions/loading';
 import { AppState } from '../../reducers/types';
 // eslint-disable-next-line import/no-cycle
 import Sidebar from './Sidebar';
@@ -24,7 +25,7 @@ export const mapDispatchToProps = (dispatch: Dispatch) => {
       updateConnection,
       removeConnection,
       setActiveConnection,
-      openConnection
+      isConnectingToServer
     },
     dispatch
   );
