@@ -1,31 +1,35 @@
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import {
-  getConnections,
-  addConnection,
-  updateConnection,
-  removeConnection
+  getConnectionsAction,
+  addConnectionAction,
+  updateConnectionAction,
+  removeConnectionAction
 } from '../../actions/localDB';
-import { setActiveConnection } from '../../actions/connection';
-import { isConnectingToServer } from '../../actions/loading';
+import { setActiveConnectionAction } from '../../actions/connection';
+import { isConnectingToServerAction } from '../../actions/loading';
 import { AppState } from '../../reducers/types';
 // eslint-disable-next-line import/no-cycle
 import Sidebar from './Sidebar';
 
-export const mapStateToProps = ({ connectionState }: AppState) => {
+export const mapStateToProps = ({
+  connectionState,
+  loadingState
+}: AppState) => {
   const { connections, activeConnection } = connectionState;
-  return { connections, activeConnection };
+  const { isConnectingToServer } = loadingState;
+  return { connections, activeConnection, isConnectingToServer };
 };
 
 export const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators(
     {
-      getConnections,
-      addConnection,
-      updateConnection,
-      removeConnection,
-      setActiveConnection,
-      isConnectingToServer
+      getConnectionsAction,
+      addConnectionAction,
+      updateConnectionAction,
+      removeConnectionAction,
+      setActiveConnectionAction,
+      isConnectingToServerAction
     },
     dispatch
   );

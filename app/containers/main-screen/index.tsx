@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { AppState } from '../../reducers/types';
 // eslint-disable-next-line import/no-cycle
 import MainScreen from './MainScreen';
-import { initDB, getConnections } from '../../actions/localDB';
+import { initDBAction, getConnectionsAction } from '../../actions/localDB';
 
 export const mapStateToProps = ({ localDBState }: AppState) => {
   const { initStatus } = localDBState;
@@ -13,8 +13,8 @@ export const mapStateToProps = ({ localDBState }: AppState) => {
 export const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators(
     {
-      initLocalDB: initDB,
-      getConnections
+      initLocalDBAction: initDBAction,
+      getConnectionsAction
     },
     dispatch
   );

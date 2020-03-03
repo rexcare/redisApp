@@ -68,9 +68,7 @@ const VizPane: React.FC<Props> = ({ activeConnection }) => {
               iconSize={64}
               className={styles.notConnectedIcon}
             />
-            <p className={styles.notConnectedText}>
-              Not connected to the server
-            </p>
+            <p className={styles.notConnectedText}>Not connected</p>
           </div>
         )}
       </div>

@@ -6,6 +6,7 @@ import styles from './ConnectionList.css';
 interface Props {
   dataSource: Array<RedisConnection>;
   activeConnection: RedisConnection | undefined;
+  isConnectingToServer: boolean;
   onConnect: (connection: RedisConnection) => void;
   onDisconnect: (connection: RedisConnection) => void;
   onDeleteConnection: (connection: RedisConnection) => void;
@@ -18,7 +19,8 @@ const ConnectionList: React.FC<Props> = ({
   onDeleteConnection,
   onEditConnection,
   onConnect,
-  onDisconnect
+  onDisconnect,
+  isConnectingToServer
 }) => {
   return (
     <div className={styles.listWrapper}>
@@ -35,6 +37,7 @@ const ConnectionList: React.FC<Props> = ({
             onDisconnect={() => onDisconnect(connection)}
             onDelete={() => onDeleteConnection(connection)}
             onEdit={() => onEditConnection(connection)}
+            isConnecting={isConnectingToServer}
           />
         ))}
     </div>

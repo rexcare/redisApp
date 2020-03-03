@@ -4,7 +4,7 @@ import { RedisConnection } from '../types';
 export const SET_ACTIVE_CONNECTION = 'SET_ACTIVE_CONNECTION';
 export const SET_CONNECTIONS = 'SET_CONNECTIONS';
 
-export const setActiveConnection = (connection: RedisConnection) => (
+export const setActiveConnectionAction = (connection: RedisConnection) => (
   dispatch: Dispatch
 ) => {
   dispatch({
@@ -13,7 +13,7 @@ export const setActiveConnection = (connection: RedisConnection) => (
   });
 };
 
-export const setConnections = (connections: RedisConnection[]) => (
+export const setConnectionsAction = (connections: RedisConnection[]) => (
   dispatch: Dispatch
 ) => {
   dispatch({

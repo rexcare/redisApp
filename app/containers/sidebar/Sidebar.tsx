@@ -31,12 +31,13 @@ enum DialogTypes {
 const Sidebar: React.FC<Props> = ({
   connections,
   activeConnection,
-  getConnections,
-  addConnection,
-  removeConnection,
-  updateConnection,
-  isConnectingToServer,
-  setActiveConnection
+  getConnectionsAction,
+  addConnectionAction,
+  removeConnectionAction,
+  updateConnectionAction,
+  isConnectingToServerAction,
+  setActiveConnectionAction,
+  isConnectingToServer
 }) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
 
@@ -83,18 +84,18 @@ const Sidebar: React.FC<Props> = ({
     onDismissDialogs();
 
     if (!connection.id) {
-      addConnection({ ...connection, id: uuidv4() });
+      addConnectionAction({ ...connection, id: uuidv4() });
     } else {
-      updateConnection(connection);
+      updateConnectionAction(connection);
     }
 
-    getConnections();
+    getConnectionsAction();
   };
 
   const onDeleteConnection = () => {
-    removeConnection(connectionForUpdate.id);
+    removeConnectionAction(connectionForUpdate.id);
     onDismissDialogs();
-    getConnections();
+    getConnectionsAction();
   };
 
   const handleErrorAlertClose = () => {
@@ -108,22 +109,22 @@ const Sidebar: React.FC<Props> = ({
       return;
     }
 
-    isConnectingToServer(true);
+    isConnectingToServerAction(true);
 
     try {
       await openConnection(connection);
-      setActiveConnection(connection);
+      setActiveConnectionAction(connection);
     } catch (err) {
       setErrorAlertVisible(true);
       setErrorAlertMessage(err.toString());
     } finally {
-      isConnectingToServer(false);
+      isConnectingToServerAction(false);
     }
   };
 
   const onDisconnect = (connection: RedisConnection) => {
     closeConnection();
-    setActiveConnection(null);
+    setActiveConnectionAction(null);
   };
 
   return (
@@ -153,6 +154,7 @@ const Sidebar: React.FC<Props> = ({
             onDisconnect={onDisconnect}
             onEditConnection={handleEditConnection}
             onDeleteConnection={confirmConnectionDelete}
+            isConnectingToServer={isConnectingToServer}
           />
         </div>
         <div className={styles.footer}>Redis GUI</div>

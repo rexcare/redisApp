@@ -12,15 +12,15 @@ type Props = StoreProps;
 
 const MainScreen: React.FC<Props> = ({
   localDBInitStatus,
-  initLocalDB,
-  getConnections
+  initLocalDBAction,
+  getConnectionsAction
 }) => {
   useEffect(() => {
-    initLocalDB();
+    initLocalDBAction();
   }, []);
 
   useEffect(() => {
-    getConnections();
+    getConnectionsAction();
   }, [localDBInitStatus]);
 
   return (

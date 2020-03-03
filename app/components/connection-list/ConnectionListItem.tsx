@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Popover, Position } from '@blueprintjs/core';
+import { Icon, Popover, Spinner } from '@blueprintjs/core';
 import { IconNames } from '@blueprintjs/icons';
 import { RedisConnection } from '../../types';
 import ConnectionListPopover from './ConnectionListPopover';
@@ -8,6 +8,7 @@ import styles from './ConnectionList.css';
 interface Props {
   connection: RedisConnection;
   isActive: boolean;
+  isConnecting: boolean;
   onConnect: () => void;
   onDisconnect: () => void;
   onEdit: () => void;
@@ -20,7 +21,8 @@ const ConnectionListItem: React.FC<Props> = ({
   onEdit,
   onConnect,
   onDisconnect,
-  onDelete
+  onDelete,
+  isConnecting
 }) => {
   return (
     <div
@@ -33,27 +35,27 @@ const ConnectionListItem: React.FC<Props> = ({
     >
       <Icon icon={IconNames.DATABASE} iconSize={Icon.SIZE_STANDARD} />
       <div className={styles.connectionName}>{connection.name}</div>
-      {isActive && (
-        <Icon
-          icon={IconNames.EDIT}
-          iconSize={Icon.SIZE_STANDARD}
-          className={styles.editIcon}
-          onClick={onEdit}
-        />
-      )}
-      <Popover
-        content={
-          <ConnectionListPopover
-            onDisconnect={onDisconnect}
-            onConnect={onConnect}
-            onEdit={onEdit}
-            onDelete={onDelete}
-            isOpen={isActive}
+      {isConnecting ? (
+        <Spinner size={Spinner.SIZE_SMALL} />
+      ) : (
+        <Popover
+          content={
+            <ConnectionListPopover
+              onDisconnect={onDisconnect}
+              onConnect={onConnect}
+              onEdit={onEdit}
+              onDelete={onDelete}
+              isOpen={isActive}
+            />
+          }
+        >
+          <Icon
+            icon={IconNames.MORE}
+            iconSize={Icon.SIZE_STANDARD}
+            style={{ cursor: 'pointer' }}
           />
-        }
-      >
-        <Icon icon={IconNames.MORE} iconSize={Icon.SIZE_STANDARD} />
-      </Popover>
+        </Popover>
+      )}
     </div>
   );
 };

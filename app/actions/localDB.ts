@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { RedisConnection } from '../types';
-import { setConnections } from './connection';
+import { setConnectionsAction } from './connection';
 
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
@@ -15,7 +15,7 @@ const INITIAL_DB_STATE = {
   connectionCount: 0
 };
 
-export const initDB = () => (dispatch: Dispatch) => {
+export const initDBAction = () => (dispatch: Dispatch) => {
   const result = lowDB.read().getState();
 
   if (!Object.keys(result).length) {
@@ -25,12 +25,12 @@ export const initDB = () => (dispatch: Dispatch) => {
   dispatch({ type: SET_LOCALDB_INIT_STATUS, payload: true });
 };
 
-export const getConnections = () => (dispatch: Dispatch) => {
+export const getConnectionsAction = () => (dispatch: Dispatch) => {
   const connections = lowDB.get('connections').value();
-  setConnections(connections)(dispatch);
+  setConnectionsAction(connections)(dispatch);
 };
 
-export const addConnection = (connection: RedisConnection) => (
+export const addConnectionAction = (connection: RedisConnection) => (
   dispatch: Dispatch
 ) => {
   lowDB
@@ -41,7 +41,7 @@ export const addConnection = (connection: RedisConnection) => (
   lowDB.update('connectionCount', count => count + 1);
 };
 
-export const updateConnection = (connection: RedisConnection) => (
+export const updateConnectionAction = (connection: RedisConnection) => (
   dispatch: Dispatch
 ) => {
   const { id, ...fieldsForUpdate } = connection;
@@ -53,7 +53,7 @@ export const updateConnection = (connection: RedisConnection) => (
     .write();
 };
 
-export const removeConnection = (id: string) => (dispatch: Dispatch) => {
+export const removeConnectionAction = (id: string) => (dispatch: Dispatch) => {
   lowDB
     .get('connections')
     .remove({ id })
