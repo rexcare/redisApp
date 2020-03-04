@@ -5,6 +5,7 @@ import createRootReducer from '../reducers';
 import * as connectionActions from '../actions/connection';
 import * as localDBActions from '../actions/localDB';
 import * as loadingActions from '../actions/loading';
+import * as queryActions from '../actions/query';
 import { AppState } from '../reducers/types';
 
 declare global {
@@ -46,7 +47,8 @@ const configureStore = (initialState?: AppState) => {
   const actionCreators = {
     ...localDBActions,
     ...connectionActions,
-    ...loadingActions
+    ...loadingActions,
+    ...queryActions
   };
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose
   /* eslint-disable no-underscore-dangle */

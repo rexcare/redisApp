@@ -10,8 +10,9 @@ export type LocalDBState = {
   initStatus: boolean;
 };
 
-export type QueryResultState = {
+export type QueryState = {
   resultData: any | undefined;
+  error: string | undefined;
 };
 
 export type LoadingState = {
@@ -21,7 +22,7 @@ export type LoadingState = {
 
 export type AppState = {
   connectionState: ConnectionState;
-  queryResultState: QueryResultState;
+  queryState: QueryState;
   localDBState: LocalDBState;
   loadingState: LoadingState;
 };

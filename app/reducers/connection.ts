@@ -15,7 +15,7 @@ const INITIAL_STATE: ConnectionState = {
   ]
 };
 
-export default function connection(
+export default function(
   state: State = INITIAL_STATE,
   action: AnyAction
 ): State {

@@ -33,6 +33,7 @@ const ConnectionListPopover: React.FC<OwnProps> = ({
         text="Edit"
         icon={<Icon icon={IconNames.EDIT} intent={Intent.WARNING} />}
         onClick={onEdit}
+        disabled={isOpen}
       />
 
       <MenuDivider />
@@ -40,6 +41,7 @@ const ConnectionListPopover: React.FC<OwnProps> = ({
         text="Delete"
         icon={<Icon icon={IconNames.TRASH} intent={Intent.DANGER} />}
         onClick={onDelete}
+        disabled={isOpen}
       />
       <MenuDivider />
       <MenuItem text="Exit" icon={IconNames.CROSS} />
