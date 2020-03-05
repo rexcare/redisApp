@@ -23,18 +23,15 @@ const VizPane: React.FC<Props> = ({ activeConnection }) => {
       <div className={styles.codeEditor}>
         <div className={styles.editorHeader}>
           <div className={styles.editorHeaderConnection}>
-            {activeConnection ? (
+            {activeConnection && (
               <>
                 <Icon
                   icon={IconNames.DATABASE}
                   iconSize={Icon.SIZE_STANDARD}
                   style={{ marginRight: '8px' }}
                 />
-                {activeConnection.name} [${activeConnection.host}:$
-                {activeConnection.port}]
+                {`${activeConnection.name} [${activeConnection.host} :${activeConnection.port}]`}
               </>
-            ) : (
-              <div>Not connected</div>
             )}
           </div>
           <div className={styles.editorHeaderButtonWrapper}>

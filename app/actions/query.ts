@@ -12,8 +12,8 @@ export const getAllKeyValuesAction = () => async (dispatch: Dispatch) => {
   dispatch(isCommandRunningAction(true));
 
   try {
-    const result = await nativeModule.getAllKeyValues(cmd);
-    dispatch({ type: SET_QUERY_RESULT, payload: result });
+    const result = await nativeModule.getAllKeyValues();
+    dispatch({ type: SET_QUERY_RESULT, payload: JSON.stringify(result) });
   } catch (err) {
     dispatch({ type: SET_QUERY_ERROR, payload: err.toString() });
   } finally {

@@ -8,6 +8,7 @@ import {
 } from '../../actions/localDB';
 import { setActiveConnectionAction } from '../../actions/connection';
 import { isConnectingToServerAction } from '../../actions/loading';
+import { getAllKeyValuesAction } from '../../actions/query';
 import { AppState } from '../../reducers/types';
 // eslint-disable-next-line import/no-cycle
 import Sidebar from './Sidebar';
@@ -29,7 +30,8 @@ export const mapDispatchToProps = (dispatch: Dispatch) => {
       updateConnectionAction,
       removeConnectionAction,
       setActiveConnectionAction,
-      isConnectingToServerAction
+      isConnectingToServerAction,
+      getAllKeyValuesAction
     },
     dispatch
   );

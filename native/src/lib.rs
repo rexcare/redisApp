@@ -4,7 +4,6 @@ extern crate redis;
 
 mod connection;
 mod query;
-mod serialize;
 
 use neon::prelude::*;
 use connection::{ConnectionOptions};
@@ -61,22 +60,38 @@ fn close_connection(mut cx: FunctionContext) -> JsResult<JsUndefined> {
 }
 
 
-fn get_keys() {
+fn get_all_key_values(mut cx: FunctionContext) -> JsResult<JsString> {
     match connection::get_connection() {
       Some(redis_conn) =>  {
-        query::get_keys(redis_conn);
+          let result: String = query::get_all_key_values(redis_conn);
+          return Ok(cx.string(&result));
       },
       None => {
-        println!("Errored");
+          return cx.throw_error("Unable to get connection !");
       },
     };
 }
 
+
+fn get_query_result(mut cx: FunctionContext) -> JsResult<JsUndefined> {
+    let cmd = cx.argument::<JsString>(0)?.value();
+    match connection::get_connection() {
+      Some(redis_conn) => {
+        query::get_query_result(redis_conn, &cmd);
+      },
+      None => {
+        println!("");
+      }
+    }
+    Ok(cx.undefined())
+}
 
 
 
 register_module!(mut cx, {
     cx.export_function("hello", hello)?;
     cx.export_function("openConnection", open_connection)?;
-    cx.export_function("closeConnection", close_connection)
+    cx.export_function("closeConnection", close_connection)?;
+    cx.export_function("getAllKeyValues", get_all_key_values)?;
+    cx.export_function("getQueryResult", get_query_result)
 });

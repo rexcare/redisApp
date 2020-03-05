@@ -37,7 +37,8 @@ const Sidebar: React.FC<Props> = ({
   updateConnectionAction,
   isConnectingToServerAction,
   setActiveConnectionAction,
-  isConnectingToServer
+  isConnectingToServer,
+  getAllKeyValuesAction
 }) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
 
@@ -114,6 +115,7 @@ const Sidebar: React.FC<Props> = ({
     try {
       await openConnection(connection);
       setActiveConnectionAction(connection);
+      getAllKeyValuesAction();
     } catch (err) {
       setErrorAlertVisible(true);
       setErrorAlertMessage(err.toString());
