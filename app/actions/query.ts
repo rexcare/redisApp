@@ -13,7 +13,7 @@ export const getAllKeyValuesAction = () => async (dispatch: Dispatch) => {
 
   try {
     const result = await nativeModule.getAllKeyValues();
-    dispatch({ type: SET_QUERY_RESULT, payload: JSON.stringify(result) });
+    dispatch({ type: SET_QUERY_RESULT, payload: JSON.parse(result) });
   } catch (err) {
     dispatch({ type: SET_QUERY_ERROR, payload: err.toString() });
   } finally {

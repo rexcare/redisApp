@@ -6,3 +6,9 @@ export interface RedisConnection {
   password: string;
   db: string;
 }
+
+export interface ResultType {
+  key: string;
+  type: string;
+  value: any;
+}

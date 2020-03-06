@@ -13,7 +13,7 @@ interface OwnProps {}
 
 type Props = StoreProps & OwnProps;
 
-const VizPane: React.FC<Props> = ({ activeConnection }) => {
+const VizPane: React.FC<Props> = ({ activeConnection, resultData }) => {
   const runScript = () => {};
 
   const clearScript = () => {};
@@ -57,7 +57,7 @@ const VizPane: React.FC<Props> = ({ activeConnection }) => {
       </div>
       <div className={styles.resultView}>
         {activeConnection ? (
-          <ResultView />
+          <ResultView resultData={resultData} />
         ) : (
           <div className={styles.notConnectedWrapper}>
             <Icon

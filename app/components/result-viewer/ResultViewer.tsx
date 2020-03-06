@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTable } from 'react-table';
+import { ResultType } from '../../types';
 import styles from './ResultViewer.css';
-
 import data from './data.json';
 
 const columns = [
@@ -10,7 +10,17 @@ const columns = [
   { Header: 'Type', accessor: 'type' }
 ];
 
-const ResultViewer = () => {
+interface Props {
+  resultData: any;
+}
+
+const ResultViewer: React.FC<Props> = ({ resultData }) => {
+  const getResultData: ResultType[] = () => {
+    return Object.keys(resultData).map(key => [
+      { key, value: resultData[key].value || '', type: resultData[key].type }
+    ]);
+  };
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -19,7 +29,7 @@ const ResultViewer = () => {
     prepareRow
   } = useTable({
     columns,
-    data
+    data: getResultData()
   });
 
   const renderResultTable = () => (
