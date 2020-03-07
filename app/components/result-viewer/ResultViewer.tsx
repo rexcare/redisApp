@@ -2,7 +2,6 @@ import React from 'react';
 import { useTable } from 'react-table';
 import { ResultType } from '../../types';
 import styles from './ResultViewer.css';
-import data from './data.json';
 
 const columns = [
   { Header: 'Key', accessor: 'key' },
@@ -14,13 +13,19 @@ interface Props {
   resultData: any;
 }
 
-const ResultViewer: React.FC<Props> = ({ resultData }) => {
-  const getResultData: ResultType[] = () => {
-    return Object.keys(resultData).map(key => [
-      { key, value: resultData[key].value || '', type: resultData[key].type }
-    ]);
-  };
+const getFormattedData = (data): ResultType => {
+  if (!data || Object.keys(data).length === 0) {
+    return [];
+  }
 
+  return Object.keys(data).map(key => ({
+    key,
+    value: data[key].value,
+    type: data[key].type
+  }));
+};
+
+const ResultViewer: React.FC<Props> = ({ resultData }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -29,34 +34,52 @@ const ResultViewer: React.FC<Props> = ({ resultData }) => {
     prepareRow
   } = useTable({
     columns,
-    data: getResultData()
+    data: getFormattedData(resultData)
   });
 
-  const renderResultTable = () => (
-    <table {...getTableProps()}>
-      <thead>
-        {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-            ))}
+  const renderResultTable = () => {
+    const renderRows = () => {
+      return rows.map(row => {
+        prepareRow(row);
+        return (
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          <tr {...row.getRowProps()} key={row.id}>
+            {row.cells.map(cell => {
+              return (
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                <td key={cell.row.id} {...cell.getCellProps()}>
+                  {cell.render('Cell')}
+                </td>
+              );
+            })}
           </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row, i) => {
-          prepareRow(row);
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map(cell => {
-                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
-              })}
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
-  );
+        );
+      });
+    };
+
+    const renderHeader = () => {
+      return headerGroups.map(headerGroup => (
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
+          {headerGroup.headers.map(column => (
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            <th key={column.id} {...column.getHeaderProps()}>
+              {column.render('Header')}
+            </th>
+          ))}
+        </tr>
+      ));
+    };
+
+    return (
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      <table {...getTableProps()}>
+        <thead>{renderHeader()}</thead>
+        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+        <tbody {...getTableBodyProps()}>{renderRows()}</tbody>
+      </table>
+    );
+  };
 
   return <div className={styles.wrapper}>{renderResultTable()}</div>;
 };
