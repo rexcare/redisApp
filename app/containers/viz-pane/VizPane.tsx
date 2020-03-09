@@ -6,6 +6,8 @@ import styles from './VizPane.css';
 // eslint-disable-next-line import/no-cycle
 import { mapStateToProps, mapDispatchToProps } from './index';
 
+const nativeModule = require('../../../native/index.node');
+
 type StoreProps = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
@@ -14,7 +16,9 @@ interface OwnProps {}
 type Props = StoreProps & OwnProps;
 
 const VizPane: React.FC<Props> = ({ activeConnection, resultData }) => {
-  const runScript = () => {};
+  const runScript = () => {
+    nativeModule.getValForKey('myhash', 'hash');
+  };
 
   const clearScript = () => {};
 

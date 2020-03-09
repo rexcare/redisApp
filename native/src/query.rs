@@ -36,6 +36,32 @@ pub fn get_all_key_values(_connection: &mut Connection) -> String {
     return serde_json::to_string(&key_vals).unwrap();
 }
 
-pub fn get_query_result(_connection: &mut redis::Connection, query: &str) {
+pub fn get_val_for_key(_connection: &mut redis::Connection, _type: &str, _key: &str) -> String {
+    let mut res = Vec::<String>::new();
+
+    if HASH_TYPE == _type.to_lowercase() {
+       res = redis::cmd("HGETALL").arg(_key).query(_connection).unwrap();
+    } else if LIST_TYPE == _type.to_lowercase() {
+        res = redis::cmd("LRANGE").arg(_key).arg(0).arg(-1).query(_connection).unwrap();
+    } else if SET_TYPE == _type.to_lowercase() {
+        res = redis::cmd("SMEMBERS").arg(_key).query(_connection).unwrap();
+    } else if ZSET_TYPE == _type.to_lowercase() {
+        res = redis::cmd("ZRANGE").arg(_key).arg(0).arg(-1).query(_connection).unwrap();
+    } else {
+        panic!("Type not found");
+    }
+
+    let mut val_map = Map::new();
+    let mut res_map = Map::new();
+
+    val_map.insert("type".to_string(), Value::String(_type.to_string()));
+    //val_map.insert("value".to_string(), Value::Array(res));
+
+    res_map.insert(_key.to_string(), Value::Object(val_map));
+
+    return serde_json::to_string(&res_map).unwrap();
+}
+
+pub fn get_query_result(_connection: &mut redis::Connection, _query: &str) {
 
 }
