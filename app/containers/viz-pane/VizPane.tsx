@@ -17,7 +17,12 @@ type Props = StoreProps & OwnProps;
 
 const VizPane: React.FC<Props> = ({ activeConnection, resultData }) => {
   const runScript = () => {
-    nativeModule.getValForKey('myhash', 'hash');
+    const res = nativeModule.getValForKey(
+      'bull:CLEAR_PAID_TABLE_QUEUE:1	',
+      'hash'
+    );
+    console.log(res);
+    console.log(JSON.parse(res));
   };
 
   const clearScript = () => {};

@@ -78,8 +78,8 @@ fn get_val_for_key(mut cx: FunctionContext) -> JsResult<JsString> {
 
   match connection::get_connection() {
     Some(redis_conn) => {
-      query::get_val_for_key(redis_conn, &val_type, &key);
-      return Ok(cx.string("result"));
+      let result: String = query::get_val_for_key(redis_conn, &val_type, &key);
+      return Ok(cx.string(&result));
     }
     None => {
       return cx.throw_error("Unable to get connection !");
