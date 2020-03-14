@@ -5,7 +5,6 @@ import { CodeEditor, ResultView } from '../../components';
 import styles from './VizPane.css';
 // eslint-disable-next-line import/no-cycle
 import { mapStateToProps, mapDispatchToProps } from './index';
-import { REDIS_DATATYPE } from '../../types';
 
 const nativeModule = require('../../../native/index.node');
 
@@ -16,23 +15,13 @@ interface OwnProps {}
 
 type Props = StoreProps & OwnProps;
 
-const VizPane: React.FC<Props> = ({ activeConnection, resultData }) => {
+const VizPane: React.FC<Props> = ({
+  activeConnection,
+  resultData,
+  getValForKeyAction
+}) => {
   const runScript = () => {
-    const res = nativeModule.getValForKey('myhash', 'hash');
-    const result = JSON.parse(res);
-    const keys = Object.keys(result);
-    if (
-      keys.length &&
-      result[keys[0]].value &&
-      typeof result[keys[0]].value === REDIS_DATATYPE.STRING
-    ) {
-      try {
-        result[keys[0]].value = JSON.parse(result[keys[0]].value);
-      } catch (err) {
-        console.error(err);
-      }
-      console.log(result);
-    }
+    getValForKeyAction('myhash', 'hash');
   };
 
   const clearScript = () => {};

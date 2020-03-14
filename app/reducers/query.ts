@@ -1,5 +1,9 @@
 import { QueryState } from './types';
-import { SET_QUERY_ERROR, SET_QUERY_RESULT } from '../actions/query';
+import {
+  SET_QUERY_ERROR,
+  SET_QUERY_RESULT,
+  GET_QUERY_RESULT_FOR_KEY_SUCCESS
+} from '../actions/query';
 
 const INITIAL_STATE: QueryState = {
   resultData: undefined,
@@ -14,6 +18,9 @@ export default function(state = INITIAL_STATE, action) {
 
     case SET_QUERY_ERROR:
       return { ...state, error: payload };
+
+    case GET_QUERY_RESULT_FOR_KEY_SUCCESS:
+      return { ...state, resultData: { ...state.resultData, ...payload } };
 
     default:
       return state;
