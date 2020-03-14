@@ -12,3 +12,12 @@ export interface ResultType {
   type: string;
   value: any;
 }
+
+export const REDIS_DATATYPE = {
+  STRING: 'string',
+  LIST: 'list',
+  SET: 'set',
+  ZSET: 'zset',
+  HASH: 'hash',
+  STREAM: 'stream'
+};

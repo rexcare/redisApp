@@ -61,7 +61,8 @@ pub fn get_val_for_key(_connection: &mut redis::Connection, _type: &str, _key: &
   let mut val_map = Map::new();
   let mut res_map = Map::new();
 
-  let res_str = format!("{:?}", res);
+  let mut res_str = format!("{:?}", res);
+  res_str = res_str.trim_matches(&['"', '"'] as &[_]).to_owned();
 
   val_map.insert("type".to_string(), Value::String(_type.to_string()));
   val_map.insert("value".to_string(), Value::String(res_str));
