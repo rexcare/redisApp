@@ -28,3 +28,10 @@ table > tbody td {
   -webkit-box-shadow: 0 0 0 0.5px rgba(16, 22, 26, 0.15);
   box-shadow: 0 0 0 0.5px rgba(16, 22, 26, 0.15);
 }
+
+.valueCell {
+}
+
+.keyCell {
+  cursor: pointer;
+}

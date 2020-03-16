@@ -65,7 +65,10 @@ const VizPane: React.FC<Props> = ({
       </div>
       <div className={styles.resultView}>
         {activeConnection ? (
-          <ResultView resultData={resultData} />
+          <ResultView
+            resultData={resultData}
+            getValueForKey={getValForKeyAction}
+          />
         ) : (
           <div className={styles.notConnectedWrapper}>
             <Icon
