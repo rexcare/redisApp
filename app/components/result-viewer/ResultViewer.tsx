@@ -7,13 +7,24 @@ interface Props {
   getValueForKey: (key: string, type: string) => void;
 }
 
+const ComplexCell = ({ cell: { value } }) => {
+  // eslint-disable-next-line react/no-array-index-key
+  return value.map((item, idx) => <div key={idx}>{`${idx + 1}. ${item}`}</div>);
+};
+
 const columns = [
   {
     Header: 'Key',
-    accessor: 'key'
+    accessor: 'key',
+    className: styles.columnLg
   },
-  { Header: 'Value', accessor: 'value' },
-  { Header: 'Type', accessor: 'type' }
+  {
+    Header: 'Value',
+    accessor: 'value',
+    className: styles.columnLg,
+    ComplexCell
+  },
+  { Header: 'Type', accessor: 'type', className: styles.columnSm }
 ];
 
 const ResultViewer: React.FC<Props> = ({ resultData, getValueForKey }) => {

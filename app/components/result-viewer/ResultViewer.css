@@ -29,9 +29,10 @@ table > tbody td {
   box-shadow: 0 0 0 0.5px rgba(16, 22, 26, 0.15);
 }
 
-.valueCell {
+.columnLg {
+  width: 40%;
 }
 
-.keyCell {
-  cursor: pointer;
+.columnSm {
+  width: 20%;
 }

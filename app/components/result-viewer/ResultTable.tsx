@@ -66,7 +66,9 @@ const ResultTable: React.FC<Props> = ({
                     getCellProps(cell)
                   ])}
                 >
-                  {cell.render('Cell')}
+                  {Array.isArray(cell.value)
+                    ? cell.render('ComplexCell')
+                    : cell.render('Cell')}
                 </td>
               );
             })}
