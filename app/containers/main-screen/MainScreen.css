@@ -22,11 +22,11 @@
   flex: 1;
   max-width: 400px;
   word-wrap: break-word;
-  overflow-x: hidden;
 }
 
 .vizPane {
   flex: 5;
   display: flex;
   flex-direction: column;
+  overflow: auto;
 }

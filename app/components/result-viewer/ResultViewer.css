@@ -27,6 +27,8 @@ table > tbody td {
   padding: 0.75rem;
   -webkit-box-shadow: 0 0 0 0.5px rgba(16, 22, 26, 0.15);
   box-shadow: 0 0 0 0.5px rgba(16, 22, 26, 0.15);
+  overflow: auto;
+  width: 33%;
 }
 
 .columnLg {
@@ -34,5 +36,5 @@ table > tbody td {
 }
 
 .columnSm {
-  width: 20%;
+  min-width: 150px;
 }
