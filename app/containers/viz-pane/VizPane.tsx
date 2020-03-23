@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Intent, Icon } from '@blueprintjs/core';
 import { IconNames } from '@blueprintjs/icons';
 import { CodeEditor, ResultView } from '../../components';
 import styles from './VizPane.css';
 // eslint-disable-next-line import/no-cycle
 import { mapStateToProps, mapDispatchToProps } from './index';
-
-const nativeModule = require('../../../native/index.node');
 
 type StoreProps = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -20,11 +18,17 @@ const VizPane: React.FC<Props> = ({
   resultData,
   getValForKeyAction
 }) => {
+  const [cmd, setCmd] = useState<string>(
+    '// under construction. coming soon...'
+  );
+
   const runScript = () => {
-    getValForKeyAction('myhash', 'hash');
+    console.log(cmd);
   };
 
-  const clearScript = () => {};
+  const clearScript = () => {
+    // setCmd('');
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -48,7 +52,7 @@ const VizPane: React.FC<Props> = ({
               icon={IconNames.REFRESH}
               intent={Intent.SUCCESS}
               onClick={runScript}
-              disabled={!activeConnection}
+              disabled
               className={styles.editorHeaderButtons}
             />
             <Button
@@ -56,12 +60,14 @@ const VizPane: React.FC<Props> = ({
               icon={IconNames.ERASER}
               intent={Intent.WARNING}
               onClick={clearScript}
-              disabled={!activeConnection}
+              disabled
               className={styles.editorHeaderButtons}
             />
           </div>
         </div>
-        {activeConnection && <CodeEditor />}
+        {activeConnection && (
+          <CodeEditor onChange={setCmd} cmd={cmd} disabled />
+        )}
       </div>
       <div className={styles.resultView}>
         {activeConnection ? (

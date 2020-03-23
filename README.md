@@ -2,6 +2,8 @@
 
 A desktop GUI client (Mac, Windows & Linux) for Redis built using Electron, React & Rust.
 
+**🚧This project is under development and is not ready for prime time use. 🚧**
+
 ## Motivation
 
 There are some great free and open source Redis Desktop GUI clients like
@@ -11,7 +13,10 @@ querying and interop with JavaScript to provide performance close to the native 
 
 ## Running locally
 
-Install Node & [Rust](https://www.rust-lang.org/tools/install).
+### Prerequisites
+
+- Node 12.12 or higher
+- [Rust](https://www.rust-lang.org/tools/install) 1.41.1 or higher
 
 ### Running dev version
 
@@ -29,6 +34,12 @@ yarn package # packages for the local platform
 ```
 
 For more info see [docs](https://electron-react-boilerplate.js.org/docs/packaging).
+
+## Screenshots
+
+![screnshot 1](/screenshots/screenshot1.png)
+
+![screnshot 2](/screenshots/screenshot2.png)
 
 ## Contributions
 

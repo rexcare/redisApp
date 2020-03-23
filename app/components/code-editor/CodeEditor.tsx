@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import MonacoEditor, { monaco } from '@monaco-editor/react';
+import React from 'react';
+import { monaco, ControlledEditor as MonacoEditor } from '@monaco-editor/react';
 import Editor from 'monaco-editor';
 
 const path = require('path');
@@ -26,13 +26,13 @@ monaco.config({
 
 interface OwnProps {
   disabled: boolean;
+  onChange: (cmd: string) => void;
+  cmd: string;
 }
 
 type Props = OwnProps;
 
-const CodeEditor: React.FC<Props> = ({ disabled }) => {
-  const [code, setCode] = useState<string>('');
-
+const CodeEditor: React.FC<Props> = ({ disabled, onChange, cmd }) => {
   const options: Editor.editor.IEditorConstructionOptions = {
     automaticLayout: true,
     scrollBeyondLastLine: false,
@@ -41,15 +41,15 @@ const CodeEditor: React.FC<Props> = ({ disabled }) => {
     lineNumbers: 'off'
   };
 
-  const onChangeCode = (_, val) => setCode(val);
+  const onChangeCmd = (_, val) => onChange(val);
 
   return (
     <MonacoEditor
       theme="dark"
       language="redis"
-      value={code}
+      value={cmd}
       options={{ ...options, readOnly: disabled }}
-      onChange={onChangeCode}
+      onChange={onChangeCmd}
     />
   );
 };
